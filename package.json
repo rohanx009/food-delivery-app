@@ -1,6 +1,29 @@
 {
-  "name": "my-v0-project",
-  "version": "0.1.0",
+  "name": "food-delivery-app",
+  "version": "1.0.0",
+  "description": "A modern food delivery platform with multi-role dashboards, restaurant browsing, menu management, and order tracking",
+  "author": "Rohan Gowda <rohangowda290@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rohanx009/food-delivery-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rohanx009/food-delivery-app/issues"
+  },
+  "homepage": "https://github.com/rohanx009/food-delivery-app#readme",
+  "keywords": [
+    "food-delivery",
+    "nextjs",
+    "react",
+    "typescript",
+    "tailwindcss",
+    "restaurant",
+    "e-commerce",
+    "order-management",
+    "delivery-app",
+    "multi-tenant"
+  ],
   "private": true,
   "scripts": {
     "build": "next build",
