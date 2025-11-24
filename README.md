@@ -212,7 +212,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Rohan Gowda**
 - GitHub: [@rohanx009](https://github.com/rohanx009)
-- Email: rohangowda290@gmail.com
+- Email: rohan.genai10@gmail.com
 
 ## 🌟 Show Your Support
 
