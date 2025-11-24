@@ -21,6 +21,7 @@ Your site will be live in 2-3 minutes!
 Your app will be available at: `https://food-delivery-app-[random].vercel.app`
 
 ### Features:
+
 - ✅ Automatic deployments on git push
 - ✅ Free SSL certificate
 - ✅ Global CDN
@@ -38,6 +39,7 @@ If you want to add MongoDB later:
 ## Troubleshooting
 
 If deployment fails, check:
+
 - Build logs in Vercel dashboard
 - Ensure all dependencies are in package.json
 - Verify Node.js version compatibility
