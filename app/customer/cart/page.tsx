@@ -1,62 +1,105 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useAuth } from "@/context/auth-context"
-import { useRouter } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import type { CartItem } from "@/lib/types"
-import { mockRestaurants } from "@/lib/mock-data"
-import { ArrowLeft, Trash2 } from "lucide-react"
+import { useState, useEffect } from "react";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import type { CartItem } from "@/lib/types";
+import { mockRestaurants } from "@/lib/mock-data";
+import { ArrowLeft, Trash2 } from "lucide-react";
 
 export default function CartPage() {
-  const { user } = useAuth()
-  const router = useRouter()
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
-  const [deliveryAddress, setDeliveryAddress] = useState("123 Main Street, Apt 4B")
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [orderPlaced, setOrderPlaced] = useState(false)
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [deliveryAddress, setDeliveryAddress] = useState(
+    "123 Main Street, Apt 4B"
+  );
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [orderPlaced, setOrderPlaced] = useState(false);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
   useEffect(() => {
-    const cart = localStorage.getItem("currentCart")
+    const cart = localStorage.getItem("currentCart");
     if (cart) {
-      setCartItems(JSON.parse(cart))
+      setCartItems(JSON.parse(cart));
     }
-  }, [])
+  }, []);
+
+  // Persist cart changes to localStorage
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      localStorage.setItem("currentCart", JSON.stringify(cartItems));
+    } else {
+      localStorage.removeItem("currentCart");
+    }
+  }, [cartItems]);
+
+  useEffect(() => {
+    // Only redirect after loading is complete and we're certain there's no user
+    if (!isLoading) {
+      if (!user) {
+        setShouldRedirect(true);
+      }
+    }
+  }, [user, isLoading]);
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      router.push("/");
+    }
+  }, [shouldRedirect, router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   if (!user) {
-    router.push("/")
-    return null
+    return null;
   }
 
-  const restaurant = mockRestaurants.find((r) => r.id === cartItems[0]?.restaurantId)
+  const restaurant = mockRestaurants.find(
+    (r) => r.id === cartItems[0]?.restaurantId
+  );
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.menuItem.price * item.quantity, 0)
-  const deliveryFee = restaurant?.deliveryFee || 0
-  const tax = Math.round(subtotal * 0.05)
-  const total = subtotal + deliveryFee + tax
+  const subtotal = cartItems.reduce(
+    (sum, item) => sum + item.menuItem.price * item.quantity,
+    0
+  );
+  const deliveryFee = restaurant?.deliveryFee || 0;
+  const tax = Math.round(subtotal * 0.05);
+  const total = subtotal + deliveryFee + tax;
 
   const handleRemoveItem = (itemId: string) => {
-    setCartItems((prev) => prev.filter((item) => item.menuItem.id !== itemId))
-  }
+    setCartItems((prev) => prev.filter((item) => item.menuItem.id !== itemId));
+  };
 
   const handleQuantityChange = (itemId: string, newQuantity: number) => {
     if (newQuantity === 0) {
-      handleRemoveItem(itemId)
+      handleRemoveItem(itemId);
     } else {
       setCartItems((prev) =>
-        prev.map((item) => (item.menuItem.id === itemId ? { ...item, quantity: newQuantity } : item)),
-      )
+        prev.map((item) =>
+          item.menuItem.id === itemId
+            ? { ...item, quantity: newQuantity }
+            : item
+        )
+      );
     }
-  }
+  };
 
   const handlePlaceOrder = async () => {
-    setIsProcessing(true)
+    setIsProcessing(true);
     // Simulate payment processing
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    setOrderPlaced(true)
-  }
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    setOrderPlaced(true);
+  };
 
   if (orderPlaced) {
     return (
@@ -64,8 +107,12 @@ export default function CartPage() {
         <Card className="max-w-md w-full p-8 text-center">
           <div className="text-5xl mb-4">🎉</div>
           <h1 className="text-2xl font-bold mb-2">Order Placed!</h1>
-          <p className="text-muted-foreground mb-6">Your order has been confirmed and is being prepared.</p>
-          <p className="text-sm text-muted-foreground mb-6">Estimated delivery: 35-40 minutes</p>
+          <p className="text-muted-foreground mb-6">
+            Your order has been confirmed and is being prepared.
+          </p>
+          <p className="text-sm text-muted-foreground mb-6">
+            Estimated delivery: 35-40 minutes
+          </p>
           <Button
             onClick={() => router.push("/customer/browse")}
             className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -74,7 +121,7 @@ export default function CartPage() {
           </Button>
         </Card>
       </div>
-    )
+    );
   }
 
   return (
@@ -96,11 +143,16 @@ export default function CartPage() {
             <Card className="p-6 mb-6">
               <h2 className="text-lg font-bold mb-4">{restaurant?.name}</h2>
               {cartItems.length === 0 ? (
-                <p className="text-muted-foreground text-center py-8">Your cart is empty</p>
+                <p className="text-muted-foreground text-center py-8">
+                  Your cart is empty
+                </p>
               ) : (
                 <div className="space-y-4">
                   {cartItems.map((item) => (
-                    <div key={item.menuItem.id} className="flex items-center justify-between p-4 bg-secondary rounded">
+                    <div
+                      key={item.menuItem.id}
+                      className="flex items-center justify-between p-4 bg-secondary rounded"
+                    >
                       <div className="flex-1">
                         <p className="font-semibold">{item.menuItem.name}</p>
                         <p className="text-sm text-muted-foreground">
@@ -108,25 +160,43 @@ export default function CartPage() {
                         </p>
                       </div>
                       <div className="flex items-center gap-4">
-                        <p className="font-bold">₹{item.menuItem.price * item.quantity}</p>
+                        <p className="font-bold">
+                          ₹{item.menuItem.price * item.quantity}
+                        </p>
                         <div className="flex items-center gap-2">
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleQuantityChange(item.menuItem.id, item.quantity - 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.menuItem.id,
+                                item.quantity - 1
+                              )
+                            }
                           >
                             −
                           </Button>
-                          <span className="w-8 text-center">{item.quantity}</span>
+                          <span className="w-8 text-center">
+                            {item.quantity}
+                          </span>
                           <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => handleQuantityChange(item.menuItem.id, item.quantity + 1)}
+                            onClick={() =>
+                              handleQuantityChange(
+                                item.menuItem.id,
+                                item.quantity + 1
+                              )
+                            }
                           >
                             +
                           </Button>
                         </div>
-                        <Button variant="ghost" size="sm" onClick={() => handleRemoveItem(item.menuItem.id)}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleRemoveItem(item.menuItem.id)}
+                        >
                           <Trash2 size={18} className="text-destructive" />
                         </Button>
                       </div>
@@ -169,7 +239,9 @@ export default function CartPage() {
 
               <div className="flex justify-between mb-6">
                 <span className="font-bold">Total</span>
-                <span className="text-2xl font-bold text-primary">₹{total}</span>
+                <span className="text-2xl font-bold text-primary">
+                  ₹{total}
+                </span>
               </div>
 
               <Button
@@ -194,5 +266,5 @@ export default function CartPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

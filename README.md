@@ -22,6 +22,8 @@
 
 - **Framework**: Next.js 16 (App Router)
 - **UI Library**: React 19
+- **Database**: MongoDB with Mongoose ODM
+- **Authentication**: JWT-based authentication with bcrypt
 - **Styling**: Tailwind CSS 4
 - **Components**: Radix UI, shadcn/ui
 - **Icons**: Lucide React
@@ -40,11 +42,32 @@ cd food-delivery-app
 # Install dependencies
 pnpm install
 
+# Set up environment variables
+cp .env.example .env.local
+# Edit .env.local and add your MongoDB connection string
+
 # Run development server
 pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Database Setup
+
+This application requires MongoDB. You can use:
+
+- **MongoDB Atlas** (Free cloud database - Recommended)
+- **Local MongoDB** installation
+
+For detailed database setup instructions, see [docs/DATABASE_SETUP.md](docs/DATABASE_SETUP.md).
+
+**Quick Setup with MongoDB Atlas:**
+
+1. Sign up at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas/register)
+2. Create a free cluster
+3. Get your connection string
+4. Add it to `.env.local` as `MONGODB_URI`
+5. Run `pnpm dev` and call `POST /api/seed` to populate restaurants
 
 ### Detailed Setup
 
@@ -98,12 +121,14 @@ food-delivery-app/
 This project was built using the following tools and technologies:
 
 ### Core Development
+
 - **VS Code** - Primary code editor with extensions for React, TypeScript, and Tailwind
 - **Node.js** (v20+) - JavaScript runtime environment
 - **pnpm** - Fast, disk space efficient package manager
 - **Git** - Version control system
 
 ### Frontend Technologies
+
 - **Next.js 16** - React framework with App Router
 - **React 19** - JavaScript library for building user interfaces
 - **TypeScript** - Static type checking for JavaScript
@@ -111,25 +136,30 @@ This project was built using the following tools and technologies:
 - **shadcn/ui** - Re-usable component library built on Radix UI
 
 ### UI Components & Icons
+
 - **Radix UI** - Unstyled, accessible component primitives
 - **Lucide React** - Beautiful & consistent icon set
 - **next-themes** - Theme management for dark/light mode
 
 ### Form & Validation
+
 - **React Hook Form** - Performant form management
 - **Zod** - TypeScript-first schema validation
 
 ### Development Tools
+
 - **ESLint** - Code quality and style checking
 - **PostCSS** - CSS processing and transformation
 - **Autoprefixer** - Adding vendor prefixes to CSS
 
 ### Deployment & CI/CD
+
 - **Vercel** - Deployment and hosting platform
 - **GitHub Actions** - Automated CI/CD pipeline
 - **GitHub** - Source code management and collaboration
 
 ### Design & Planning
+
 - **Component-driven architecture** - Building reusable UI components
 - **Mobile-first design** - Responsive design approach
 - **Accessibility standards** - Following WCAG guidelines
@@ -152,16 +182,19 @@ Comprehensive documentation is available in the `docs/` directory:
 Test the app with these demo credentials:
 
 **Customer Account:**
+
 - Email: `customer@example.com`
 - Password: Any password
 - Access: Browse, order, book tables
 
 **Restaurant Admin:**
+
 - Email: `restaurant@example.com`
 - Password: Any password
 - Access: Manage orders, menu, bookings
 
 **Delivery Partner:**
+
 - Email: `delivery@example.com`
 - Password: Any password
 - Access: View and manage deliveries
@@ -169,6 +202,7 @@ Test the app with these demo credentials:
 ## 🗺️ Roadmap
 
 ### Current Status (v1.0)
+
 - ✅ Multi-role authentication
 - ✅ Restaurant browsing and search
 - ✅ Shopping cart and checkout
@@ -178,6 +212,7 @@ Test the app with these demo credentials:
 - ✅ Dark/Light theme support
 
 ### Coming Soon (v1.1)
+
 - 🔄 Real authentication with JWT
 - 🔄 Payment integration (Stripe)
 - 🔄 Real-time order tracking
@@ -185,6 +220,7 @@ Test the app with these demo credentials:
 - 🔄 Review and rating system
 
 ### Future Plans (v2.0)
+
 - 📅 AI-powered recommendations
 - 📅 Advanced analytics
 - 📅 Multi-language support
@@ -211,6 +247,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👤 Author
 
 **Rohan M L**
+
 - GitHub: [@rohanx009](https://github.com/rohanx009)
 - Email: rohan.genai10@gmail.com
 

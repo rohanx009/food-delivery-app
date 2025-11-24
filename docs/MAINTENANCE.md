@@ -47,7 +47,8 @@ npx tsc --noEmit
 
 **Problem:** "Minimum recommended TypeScript version" warning
 
-**Solution:** 
+**Solution:**
+
 - Always keep TypeScript at v5.1.0 or higher
 - Update in `package.json`: `"typescript": "^5.6.3"`
 - Run `pnpm install` to apply changes
@@ -57,6 +58,7 @@ npx tsc --noEmit
 **Problem:** Package version conflicts or peer dependency warnings
 
 **Solution:**
+
 - Use `.npmrc` configuration (already set up)
 - Run `pnpm install --force` if needed
 - Check `pnpm-lock.yaml` is committed
@@ -66,6 +68,7 @@ npx tsc --noEmit
 **Problem:** Build fails with module errors
 
 **Solution:**
+
 ```bash
 # Clean cache and reinstall
 rm -rf .next node_modules
@@ -78,6 +81,7 @@ pnpm build
 **Problem:** Server won't start or port conflicts
 
 **Solution:**
+
 ```bash
 # Kill existing process on port 3000
 # Windows:
@@ -93,10 +97,12 @@ pnpm dev -- -p 3001
 ### Version Control Strategy
 
 **Current Setup:**
+
 - Major versions: Caret (`^`) - allows minor and patch updates
 - Example: `"next": "^16.0.3"` allows 16.x.x but not 17.x.x
 
 **When to Update:**
+
 - **Patch updates** (16.0.3 → 16.0.4): Safe, apply immediately
 - **Minor updates** (16.0.x → 16.1.x): Generally safe, test before deploying
 - **Major updates** (16.x.x → 17.x.x): Breaking changes, review changelog
@@ -177,12 +183,12 @@ git config --global core.autocrlf input
 
 ## 📅 Update Schedule
 
-| Frequency | Task | Priority |
-|-----------|------|----------|
-| Weekly | Check for security updates | High |
-| Monthly | Update dependencies | Medium |
-| Quarterly | Review and update major versions | Low |
-| Before Deploy | Run full test suite | Critical |
+| Frequency     | Task                             | Priority |
+| ------------- | -------------------------------- | -------- |
+| Weekly        | Check for security updates       | High     |
+| Monthly       | Update dependencies              | Medium   |
+| Quarterly     | Review and update major versions | Low      |
+| Before Deploy | Run full test suite              | Critical |
 
 ## 🔐 Security Updates
 
@@ -208,6 +214,7 @@ When updating dependencies, document changes:
 ## [1.x.x] - YYYY-MM-DD
 
 ### Updated Dependencies
+
 - next: 16.0.3 → 16.0.4
 - typescript: 5.0.2 → 5.6.3
 - All Radix UI packages to latest versions
@@ -230,6 +237,7 @@ Before pushing updates:
 ## 🔄 Automated Maintenance (Future)
 
 Consider setting up:
+
 - **Dependabot** - Automatic dependency updates via GitHub
 - **Renovate** - Smart dependency updates
 - **Snyk** - Security vulnerability scanning
@@ -262,6 +270,7 @@ If you encounter persistent issues:
 **Last Updated:** November 24, 2025
 
 **Current Versions:**
+
 - Next.js: 16.0.4
 - React: 19.2.0
 - TypeScript: 5.6.3

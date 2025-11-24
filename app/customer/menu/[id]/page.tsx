@@ -1,35 +1,63 @@
-"use client"
+"use client";
 
-import { useState, useMemo } from "react"
-import { useAuth } from "@/context/auth-context"
-import { mockRestaurants } from "@/lib/mock-data"
-import { MenuItemCard } from "@/components/menu-item-card"
-import { Button } from "@/components/ui/button"
-import { useRouter, useParams } from "next/navigation"
-import { ArrowLeft, ShoppingCart } from "lucide-react"
-import type { CartItem, MenuItem } from "@/lib/types"
+import { useState, useMemo, useEffect } from "react";
+import { useAuth } from "@/context/auth-context";
+import { mockRestaurants } from "@/lib/mock-data";
+import { MenuItemCard } from "@/components/menu-item-card";
+import { Button } from "@/components/ui/button";
+import { useRouter, useParams } from "next/navigation";
+import { ArrowLeft, ShoppingCart } from "lucide-react";
+import type { CartItem, MenuItem } from "@/lib/types";
 
 export default function MenuPage() {
-  const { user } = useAuth()
-  const router = useRouter()
-  const params = useParams()
-  const restaurantId = params.id as string
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+  const params = useParams();
+  const restaurantId = params.id as string;
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
 
-  const restaurant = useMemo(() => mockRestaurants.find((r) => r.id === restaurantId), [restaurantId])
+  const restaurant = useMemo(
+    () => mockRestaurants.find((r) => r.id === restaurantId),
+    [restaurantId]
+  );
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      setShouldRedirect(true);
+    }
+  }, [user, isLoading]);
+
+  useEffect(() => {
+    if (shouldRedirect) {
+      router.push("/auth");
+    }
+  }, [shouldRedirect, router]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg">Loading...</div>
+      </div>
+    );
+  }
 
   if (!user || !restaurant) {
-    return <div>Loading...</div>
+    return null;
   }
 
   const handleAddToCart = (menuItem: MenuItem, quantity: number) => {
     setCartItems((prev) => {
-      const existingItem = prev.find((item) => item.menuItem.id === menuItem.id)
+      const existingItem = prev.find(
+        (item) => item.menuItem.id === menuItem.id
+      );
       if (existingItem) {
         return prev.map((item) =>
-          item.menuItem.id === menuItem.id ? { ...item, quantity: item.quantity + quantity } : item,
-        )
+          item.menuItem.id === menuItem.id
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
       }
       return [
         ...prev,
@@ -44,13 +72,16 @@ export default function MenuPage() {
           quantity,
           restaurantId,
         },
-      ]
-    })
-  }
+      ];
+    });
+  };
 
-  const categories = [...new Set(restaurant.menu.map((item) => item.category))]
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0)
-  const cartTotal = cartItems.reduce((sum, item) => sum + item.menuItem.price * item.quantity, 0)
+  const categories = [...new Set(restaurant.menu.map((item) => item.category))];
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartTotal = cartItems.reduce(
+    (sum, item) => sum + item.menuItem.price * item.quantity,
+    0
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -63,13 +94,15 @@ export default function MenuPage() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold">{restaurant.name}</h1>
-              <p className="text-sm text-muted-foreground">{restaurant.cuisine}</p>
+              <p className="text-sm text-muted-foreground">
+                {restaurant.cuisine}
+              </p>
             </div>
           </div>
           <Button
             onClick={() => {
-              localStorage.setItem("currentCart", JSON.stringify(cartItems))
-              router.push("/customer/cart")
+              localStorage.setItem("currentCart", JSON.stringify(cartItems));
+              router.push("/customer/cart");
             }}
             disabled={cartCount === 0}
             className="bg-primary hover:bg-primary/90 text-primary-foreground"
@@ -98,12 +131,16 @@ export default function MenuPage() {
               {restaurant.menu
                 .filter((item) => item.category === category)
                 .map((item) => (
-                  <MenuItemCard key={item.id} item={item} onAddToCart={handleAddToCart} />
+                  <MenuItemCard
+                    key={item.id}
+                    item={item}
+                    onAddToCart={handleAddToCart}
+                  />
                 ))}
             </div>
           </div>
         ))}
       </main>
     </div>
-  )
+  );
 }

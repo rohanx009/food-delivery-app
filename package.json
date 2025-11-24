@@ -29,7 +29,9 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "setup:db": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-mongodb.ps1",
+    "seed": "powershell -Command \"Invoke-WebRequest -Uri http://localhost:3000/api/seed -Method POST\""
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -62,6 +64,7 @@
     "@radix-ui/react-tooltip": "1.2.8",
     "@vercel/analytics": "latest",
     "autoprefixer": "^10.4.22",
+    "bcryptjs": "^3.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "1.1.1",
@@ -69,6 +72,7 @@
     "embla-carousel-react": "8.6.0",
     "input-otp": "1.4.2",
     "lucide-react": "^0.554.0",
+    "mongoose": "^9.0.0",
     "next": "16.0.4",
     "next-themes": "latest",
     "react": "19.2.0",
@@ -85,6 +89,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
+    "@types/bcryptjs": "^3.0.0",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

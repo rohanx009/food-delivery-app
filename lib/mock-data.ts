@@ -7,6 +7,8 @@ export const mockRestaurants = [
     deliveryTime: "30-40 mins",
     deliveryFee: 40,
     location: "Downtown",
+    address: "123 MG Road, Downtown, Bangalore - 560001",
+    phone: "+91 80 1234 5678",
     description: "Authentic Indian cuisine with traditional recipes",
     imageUrl: "/indian-restaurant-exterior.jpg",
     menu: [
@@ -60,6 +62,8 @@ export const mockRestaurants = [
     deliveryTime: "20-30 mins",
     deliveryFee: 30,
     location: "Midtown",
+    address: "456 Brigade Road, Midtown, Bangalore - 560025",
+    phone: "+91 80 2345 6789",
     description: "Premium burgers and American fast food",
     imageUrl: "/burger-restaurant.jpg",
     menu: [
@@ -113,6 +117,8 @@ export const mockRestaurants = [
     deliveryTime: "35-45 mins",
     deliveryFee: 50,
     location: "Harbor District",
+    address: "789 Indiranagar, Harbor District, Bangalore - 560038",
+    phone: "+91 80 3456 7890",
     description: "Fresh sushi and Japanese delicacies",
     imageUrl: "/sushi-restaurant.jpg",
     menu: [
@@ -166,6 +172,8 @@ export const mockRestaurants = [
     deliveryTime: "35-40 mins",
     deliveryFee: 45,
     location: "South End",
+    address: "321 Koramangala, South End, Bangalore - 560095",
+    phone: "+91 80 4567 8901",
     description: "Traditional tandoori and north Indian specialties",
     imageUrl: "/tandoor-restaurant.jpg",
     menu: [
@@ -211,7 +219,7 @@ export const mockRestaurants = [
       },
     ],
   },
-]
+];
 
-export type MenuItem = (typeof mockRestaurants)[0]["menu"][0]
-export type Restaurant = (typeof mockRestaurants)[0]
+export type MenuItem = (typeof mockRestaurants)[0]["menu"][0];
+export type Restaurant = (typeof mockRestaurants)[0];
