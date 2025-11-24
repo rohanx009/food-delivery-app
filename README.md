@@ -210,7 +210,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👤 Author
 
-**Rohan Gowda**
+**Rohan M L**
 - GitHub: [@rohanx009](https://github.com/rohanx009)
 - Email: rohan.genai10@gmail.com
 
@@ -232,5 +232,5 @@ See [CHANGELOG.md](CHANGELOG.md) for a list of changes (to be created).
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by <a href="https://github.com/rohanx009">Rohan Gowda</a></sub>
+  <sub>Built with ❤️ by <a href="https://github.com/rohanx009">Rohan M L</a></sub>
 </div>
