@@ -27,6 +27,17 @@ export default function CheckoutPage() {
   );
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [formData, setFormData] = useState({
+    street: "",
+    city: "",
+    zipCode: "",
+    phone: "",
+    paymentMethod: "card",
+    cardNumber: "",
+    cardholderName: "",
+    expiryDate: "",
+    cvv: "",
+  });
 
   useEffect(() => {
     if (!isLoading && !user) {
@@ -51,17 +62,6 @@ export default function CheckoutPage() {
   if (!user) {
     return null;
   }
-  const [formData, setFormData] = useState({
-    street: "",
-    city: "",
-    zipCode: "",
-    phone: "",
-    paymentMethod: "card",
-    cardNumber: "",
-    cardholderName: "",
-    expiryDate: "",
-    cvv: "",
-  });
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
