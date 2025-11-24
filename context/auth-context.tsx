@@ -29,22 +29,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (email: string, password: string, role: UserRole) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, role }),
-      });
+      // Mock authentication for demo without database
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Login failed");
-      }
+      const mockUser: User = {
+        id: Math.random().toString(),
+        name: email.split("@")[0],
+        email,
+        phone: "+91 98765 43210",
+        role,
+        address:
+          role === UserRole.CUSTOMER ? "123 Main St, Bangalore" : undefined,
+        profileImage: "/user-avatar.jpg",
+        createdAt: new Date(),
+      };
 
-      const data = await response.json();
-      const userData = data.user;
-
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(mockUser);
+      localStorage.setItem("user", JSON.stringify(mockUser));
     } catch (error) {
       console.error("Login error:", error);
       throw error;
@@ -61,30 +62,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   ) => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          phone: "+91 98765 43210",
-          role,
-          address:
-            role === UserRole.CUSTOMER ? "123 Main St, Bangalore" : undefined,
-        }),
-      });
+      // Mock signup for demo without database
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || "Signup failed");
-      }
+      const newUser: User = {
+        id: Math.random().toString(),
+        name,
+        email,
+        phone: "+91 98765 43210",
+        role,
+        address:
+          role === UserRole.CUSTOMER ? "123 Main St, Bangalore" : undefined,
+        profileImage: "/user-avatar.jpg",
+        createdAt: new Date(),
+      };
 
-      const data = await response.json();
-      const userData = data.user;
-
-      setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
+      setUser(newUser);
+      localStorage.setItem("user", JSON.stringify(newUser));
     } catch (error) {
       console.error("Signup error:", error);
       throw error;
@@ -97,19 +91,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!user) return;
 
     try {
-      const response = await fetch(`/api/users/${user.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updates),
-      });
+      // Mock update for demo without database
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      if (!response.ok) {
-        throw new Error("Failed to update profile");
-      }
-
-      const data = await response.json();
-      const updatedUser = data.user;
-
+      const updatedUser = { ...user, ...updates };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
     } catch (error) {
