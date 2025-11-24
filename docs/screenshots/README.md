@@ -67,22 +67,22 @@ Please add the following screenshots for a complete presentation:
 
 Before adding screenshots, optimize them:
 
-```bash
+\`\`\`bash
 # Using ImageOptim (Mac) or TinyPNG (Web)
 # Or use CLI tools like:
 pnpm add -D sharp
 
 # Create an optimize script if needed
-```
+\`\`\`
 
 ## Usage in Documentation
 
 Reference screenshots in your README.md:
 
-```markdown
+\`\`\`markdown
 ![Landing Page](docs/screenshots/landing-page.png)
 ![Restaurant Browse](docs/screenshots/browse-restaurants.png)
-```
+\`\`\`
 
 ---
 

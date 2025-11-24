@@ -126,7 +126,7 @@ This document summarizes all bugs found and fixed during the comprehensive code 
 
 All customer pages now use the same auth redirect pattern:
 
-```typescript
+\`\`\`typescript
 const { user, isLoading } = useAuth();
 const [shouldRedirect, setShouldRedirect] = useState(false);
 
@@ -144,7 +144,7 @@ useEffect(() => {
 
 if (isLoading) return <Loading />;
 if (!user) return null;
-```
+\`\`\`
 
 ### Loading States
 
@@ -189,10 +189,10 @@ if (!user) return null;
 
 ### Environment Setup Required
 
-```env
+\`\`\`env
 # .env.local
 MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/<database>?retryWrites=true&w=majority
-```
+\`\`\`
 
 ### Pre-Deployment Checklist
 

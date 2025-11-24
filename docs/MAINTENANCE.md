@@ -6,7 +6,7 @@ This document provides guidance for keeping the Food Delivery App up-to-date and
 
 ### Monthly Updates (Recommended)
 
-```bash
+\`\`\`bash
 # Check for outdated packages
 pnpm outdated
 
@@ -23,11 +23,11 @@ pnpm dev
 git add -A
 git commit -m "chore: update dependencies to latest versions"
 git push
-```
+\`\`\`
 
 ### Before Every Deployment
 
-```bash
+\`\`\`bash
 # 1. Ensure dependencies are installed
 pnpm install
 
@@ -39,7 +39,7 @@ pnpm build
 
 # 4. Check for TypeScript errors
 npx tsc --noEmit
-```
+\`\`\`
 
 ## 🛡️ Preventing Common Issues
 
@@ -69,12 +69,12 @@ npx tsc --noEmit
 
 **Solution:**
 
-```bash
+\`\`\`bash
 # Clean cache and reinstall
 rm -rf .next node_modules
 pnpm install
 pnpm build
-```
+\`\`\`
 
 ### 4. Development Server Issues
 
@@ -82,7 +82,7 @@ pnpm build
 
 **Solution:**
 
-```bash
+\`\`\`bash
 # Kill existing process on port 3000
 # Windows:
 netstat -ano | findstr :3000
@@ -90,7 +90,7 @@ taskkill /PID <PID> /F
 
 # Or use different port:
 pnpm dev -- -p 3001
-```
+\`\`\`
 
 ## 📦 Package Management Best Practices
 
@@ -109,7 +109,7 @@ pnpm dev -- -p 3001
 
 ### Checking for Updates
 
-```bash
+\`\`\`bash
 # List all outdated packages
 pnpm outdated
 
@@ -118,11 +118,11 @@ pnpm update <package-name> --latest
 
 # Update all to latest (what we just did)
 pnpm update --latest
-```
+\`\`\`
 
 ## 🔍 Health Check Commands
 
-```bash
+\`\`\`bash
 # Check Node.js version (should be v20+)
 node --version
 
@@ -137,49 +137,49 @@ pnpm audit
 
 # Fix security issues
 pnpm audit --fix
-```
+\`\`\`
 
 ## 🚨 Troubleshooting
 
 ### Issue: "Cannot find module" errors
 
-```bash
+\`\`\`bash
 # Clear all and reinstall
 rm -rf node_modules .next
 pnpm install
-```
+\`\`\`
 
 ### Issue: TypeScript errors in editor
 
-```bash
+\`\`\`bash
 # Restart TypeScript server in VS Code
 # Ctrl+Shift+P → "TypeScript: Restart TS Server"
 
 # Or manually check
 npx tsc --noEmit
-```
+\`\`\`
 
 ### Issue: Styling not working
 
-```bash
+\`\`\`bash
 # Rebuild Tailwind
 pnpm build
 
 # Clear Next.js cache
 rm -rf .next
 pnpm dev
-```
+\`\`\`
 
 ### Issue: Git line ending warnings (LF/CRLF)
 
-```bash
+\`\`\`bash
 # Configure Git for your OS
 # Windows:
 git config --global core.autocrlf true
 
 # Mac/Linux:
 git config --global core.autocrlf input
-```
+\`\`\`
 
 ## 📅 Update Schedule
 
@@ -192,7 +192,7 @@ git config --global core.autocrlf input
 
 ## 🔐 Security Updates
 
-```bash
+\`\`\`bash
 # Check for security vulnerabilities
 pnpm audit
 
@@ -204,13 +204,13 @@ pnpm audit --fix
 
 # Force update vulnerable packages
 pnpm update <package-name> --latest
-```
+\`\`\`
 
 ## 📝 Changelog Maintenance
 
 When updating dependencies, document changes:
 
-```markdown
+\`\`\`markdown
 ## [1.x.x] - YYYY-MM-DD
 
 ### Updated Dependencies
@@ -218,7 +218,7 @@ When updating dependencies, document changes:
 - next: 16.0.3 → 16.0.4
 - typescript: 5.0.2 → 5.6.3
 - All Radix UI packages to latest versions
-```
+\`\`\`
 
 ## 🎯 Quality Checklist
 
@@ -246,7 +246,7 @@ Consider setting up:
 
 Create `.github/dependabot.yml`:
 
-```yaml
+\`\`\`yaml
 version: 2
 updates:
   - package-ecosystem: "npm"
@@ -254,7 +254,7 @@ updates:
     schedule:
       interval: "weekly"
     open-pull-requests-limit: 10
-```
+\`\`\`
 
 ## 📞 Getting Help
 

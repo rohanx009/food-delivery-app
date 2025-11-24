@@ -6,7 +6,7 @@
 
 Food Delivery App is built using a modern, component-based architecture leveraging Next.js 16's App Router for server-side rendering and optimal performance.
 
-```
+\`\`\`
 ┌─────────────────────────────────────────────────────────┐
 │                     Client Layer                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
@@ -47,11 +47,11 @@ Food Delivery App is built using a modern, component-based architecture leveragi
 │  │  • Orders & bookings                               ││
 │  └────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────┘
-```
+\`\`\`
 
 ## 📂 Directory Structure
 
-```
+\`\`\`
 food-delivery-app/
 │
 ├── app/                          # Next.js 16 App Router
@@ -102,13 +102,13 @@ food-delivery-app/
     ├── API.md                  # API documentation
     ├── FEATURES.md             # Feature documentation
     └── screenshots/            # App screenshots
-```
+\`\`\`
 
 ## 🔄 Data Flow
 
 ### Authentication Flow
 
-```
+\`\`\`
 User Input (Login Form)
     │
     ▼
@@ -123,11 +123,11 @@ AuthContext.login()
         ├── Customer → /dashboard/customer
         ├── Restaurant → /dashboard/restaurant
         └── Delivery → /dashboard/delivery
-```
+\`\`\`
 
 ### Order Placement Flow
 
-```
+\`\`\`
 Browse Restaurants
     │
     ▼
@@ -153,13 +153,13 @@ Order Created (Mock API)
     │
     ▼
 Redirect to Dashboard
-```
+\`\`\`
 
 ## 🎨 Component Architecture
 
 ### Component Hierarchy
 
-```
+\`\`\`
 App (Root Layout)
 │
 ├── ThemeProvider
@@ -183,7 +183,7 @@ App (Root Layout)
 │               ├── Customer Dashboard
 │               ├── Restaurant Dashboard
 │               └── Delivery Dashboard
-```
+\`\`\`
 
 ### Reusable Components
 
@@ -212,7 +212,7 @@ App (Root Layout)
 
 ### Auth Context API
 
-```typescript
+\`\`\`typescript
 interface AuthContextType {
   user: User | null
   isLoading: boolean
@@ -220,7 +220,7 @@ interface AuthContextType {
   signup: (name: string, email: string, password: string, role: UserRole) => Promise<void>
   logout: () => void
 }
-```
+\`\`\`
 
 ### Future Backend Integration
 
@@ -237,7 +237,7 @@ For production, replace with:
 ### Core Entities
 
 1. **User**
-   ```typescript
+   \`\`\`typescript
    interface User {
      id: string
      name: string
@@ -248,10 +248,10 @@ For production, replace with:
      profileImage?: string
      createdAt: Date
    }
-   ```
+   \`\`\`
 
 2. **Restaurant**
-   ```typescript
+   \`\`\`typescript
    interface Restaurant {
      id: string
      name: string
@@ -264,10 +264,10 @@ For production, replace with:
      imageUrl: string
      menu: MenuItem[]
    }
-   ```
+   \`\`\`
 
 3. **Order**
-   ```typescript
+   \`\`\`typescript
    interface Order {
      id: string
      customerId: string
@@ -278,7 +278,7 @@ For production, replace with:
      deliveryAddress: string
      createdAt: Date
    }
-   ```
+   \`\`\`
 
 ## 🎯 Design Patterns
 
@@ -333,7 +333,7 @@ For production, replace with:
 
 ### Backend Integration
 
-```
+\`\`\`
 ┌─────────────────┐
 │   Next.js App   │
 └────────┬────────┘
@@ -349,7 +349,7 @@ For production, replace with:
 │  External APIs  │
 │  (Payment, Map) │
 └─────────────────┘
-```
+\`\`\`
 
 ### Microservices Architecture (Long-term)
 

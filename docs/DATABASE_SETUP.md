@@ -44,9 +44,9 @@ This project uses **MongoDB** with **Mongoose** for data persistence. You have t
 
 6. **Update .env.local**
 
-   ```env
+   \`\`\`env
    MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/food-delivery-app?retryWrites=true&w=majority
-   ```
+   \`\`\`
 
    - Replace `<username>` with your database username
    - Replace `<password>` with your database password
@@ -55,9 +55,9 @@ This project uses **MongoDB** with **Mongoose** for data persistence. You have t
 7. **Seed the Database**
    - Start the development server: `pnpm dev`
    - In another terminal or browser, call the seed endpoint:
-   ```bash
+   \`\`\`bash
    curl -X POST http://localhost:3000/api/seed
-   ```
+   \`\`\`
    - Or visit: http://localhost:3000/api/seed in your browser (note: GET won't work, use POST)
    - You can also use Postman or any API client
 
@@ -80,39 +80,39 @@ This project uses **MongoDB** with **Mongoose** for data persistence. You have t
 
 3. **Verify Installation**
 
-   ```powershell
+   \`\`\`powershell
    mongosh
-   ```
+   \`\`\`
 
    - This should open the MongoDB shell
 
 4. **Update .env.local**
 
-   ```env
+   \`\`\`env
    MONGODB_URI=mongodb://localhost:27017/food-delivery-app
-   ```
+   \`\`\`
 
 5. **Seed the Database**
-   ```bash
+   \`\`\`bash
    pnpm dev
    # In another terminal:
    curl -X POST http://localhost:3000/api/seed
-   ```
+   \`\`\`
 
 ### For macOS:
 
 1. **Install MongoDB using Homebrew**
 
-   ```bash
+   \`\`\`bash
    brew tap mongodb/brew
    brew install mongodb-community
-   ```
+   \`\`\`
 
 2. **Start MongoDB**
 
-   ```bash
+   \`\`\`bash
    brew services start mongodb-community
-   ```
+   \`\`\`
 
 3. **Update .env.local** (same as Windows above)
 
@@ -122,29 +122,29 @@ This project uses **MongoDB** with **Mongoose** for data persistence. You have t
 
 1. **Import MongoDB public key**
 
-   ```bash
+   \`\`\`bash
    curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg
-   ```
+   \`\`\`
 
 2. **Create list file**
 
-   ```bash
+   \`\`\`bash
    echo "deb [ signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-   ```
+   \`\`\`
 
 3. **Install MongoDB**
 
-   ```bash
+   \`\`\`bash
    sudo apt-get update
    sudo apt-get install -y mongodb-org
-   ```
+   \`\`\`
 
 4. **Start MongoDB**
 
-   ```bash
+   \`\`\`bash
    sudo systemctl start mongod
    sudo systemctl enable mongod
-   ```
+   \`\`\`
 
 5. **Update .env.local** and **Seed** (same as above)
 
@@ -257,7 +257,7 @@ The application uses the following MongoDB collections:
 
 ### Command Line (mongosh)
 
-```bash
+\`\`\`bash
 # Connect to local MongoDB
 mongosh
 
@@ -277,7 +277,7 @@ show collections
 db.users.find()
 db.restaurants.find()
 db.orders.find({ customerId: "xxxxx" })
-```
+\`\`\`
 
 ## Best Practices
 
