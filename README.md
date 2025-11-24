@@ -2,7 +2,7 @@
 
 > A comprehensive, multi-role food delivery platform built with modern web technologies
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/rohangowda290-4005s-projects/v0-food-delivery-app)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/rohangowda290-4005s-projects/food-delivery-app)
 [![CI/CD](https://github.com/rohanx009/food-delivery-app/actions/workflows/ci.yml/badge.svg)](https://github.com/rohanx009/food-delivery-app/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
@@ -92,6 +92,47 @@ food-delivery-app/
 ├── lib/                  # Utility functions and types
 └── public/               # Static assets
 ```
+
+## 🛠️ Development Tools
+
+This project was built using the following tools and technologies:
+
+### Core Development
+- **VS Code** - Primary code editor with extensions for React, TypeScript, and Tailwind
+- **Node.js** (v20+) - JavaScript runtime environment
+- **pnpm** - Fast, disk space efficient package manager
+- **Git** - Version control system
+
+### Frontend Technologies
+- **Next.js 16** - React framework with App Router
+- **React 19** - JavaScript library for building user interfaces
+- **TypeScript** - Static type checking for JavaScript
+- **Tailwind CSS 4** - Utility-first CSS framework
+- **shadcn/ui** - Re-usable component library built on Radix UI
+
+### UI Components & Icons
+- **Radix UI** - Unstyled, accessible component primitives
+- **Lucide React** - Beautiful & consistent icon set
+- **next-themes** - Theme management for dark/light mode
+
+### Form & Validation
+- **React Hook Form** - Performant form management
+- **Zod** - TypeScript-first schema validation
+
+### Development Tools
+- **ESLint** - Code quality and style checking
+- **PostCSS** - CSS processing and transformation
+- **Autoprefixer** - Adding vendor prefixes to CSS
+
+### Deployment & CI/CD
+- **Vercel** - Deployment and hosting platform
+- **GitHub Actions** - Automated CI/CD pipeline
+- **GitHub** - Source code management and collaboration
+
+### Design & Planning
+- **Component-driven architecture** - Building reusable UI components
+- **Mobile-first design** - Responsive design approach
+- **Accessibility standards** - Following WCAG guidelines
 
 ## 📖 Documentation
 
@@ -183,7 +224,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a list of changes (to be created).
 
 ## 🔗 Links
 
-- **Live Demo**: [https://vercel.com/rohangowda290-4005s-projects/v0-food-delivery-app](https://vercel.com/rohangowda290-4005s-projects/v0-food-delivery-app)
+- **Live Demo**: [https://food-delivery-app-rohan.vercel.app](https://food-delivery-app-rohan.vercel.app)
 - **GitHub Repository**: [https://github.com/rohanx009/food-delivery-app](https://github.com/rohanx009/food-delivery-app)
 - **Issues**: [Report a bug or request a feature](https://github.com/rohanx009/food-delivery-app/issues)
 - **Discussions**: [Join the conversation](https://github.com/rohanx009/food-delivery-app/discussions)

@@ -11,7 +11,6 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "FoodHub - Food Delivery & Table Booking",
   description: "Order food online or book a table at your favorite restaurants",
-  generator: "v0.app",
   icons: {
     icon: [
       {

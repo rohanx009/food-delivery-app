@@ -33,7 +33,8 @@ export function LoginForm() {
         router.push("/delivery/dashboard")
       }
     } catch (error) {
-      console.error("Login failed:", error)
+      // Handle login error silently or show user-friendly message
+      setIsLoading(false)
     } finally {
       setIsLoading(false)
     }
