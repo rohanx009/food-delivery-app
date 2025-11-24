@@ -170,8 +170,7 @@ export default function CheckoutPage() {
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-300 ${
                     step === s.id
                       ? "bg-primary text-primary-foreground shadow-lg scale-110"
-                      : ["address", "payment", "confirmation"].indexOf(step) >
-                        i
+                      : ["address", "payment", "confirmation"].indexOf(step) > i
                       ? "bg-green-500 text-white"
                       : "bg-slate-200 dark:bg-slate-800 text-slate-500"
                   }`}
@@ -204,10 +203,6 @@ export default function CheckoutPage() {
             </div>
           ))}
         </div>
-
-        <div className="grid lg:grid-cols-5 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-3">
 
         <div className="grid lg:grid-cols-5 gap-8">
           {/* Main Content */}
