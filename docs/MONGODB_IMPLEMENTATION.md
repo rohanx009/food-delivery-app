@@ -25,7 +25,7 @@ The Food Delivery App now uses **MongoDB** with **Mongoose ODM** for persistent 
 
 ## Architecture
 
-```
+\`\`\`
 ┌─────────────────┐
 │  Next.js App    │
 │  (Frontend)     │
@@ -44,11 +44,11 @@ The Food Delivery App now uses **MongoDB** with **Mongoose ODM** for persistent 
 │   MongoDB       │
 │   Database      │
 └─────────────────┘
-```
+\`\`\`
 
 ## File Structure
 
-```
+\`\`\`
 food-delivery-app/
 ├── lib/
 │   ├── mongodb.ts              # Database connection
@@ -79,7 +79,7 @@ food-delivery-app/
 ├── .env.example                # Environment template
 └── docs/
     └── DATABASE_SETUP.md       # Detailed setup guide
-```
+\`\`\`
 
 ## Database Models
 
@@ -87,7 +87,7 @@ food-delivery-app/
 
 **Schema:**
 
-```typescript
+\`\`\`typescript
 {
   name: String (required),
   email: String (required, unique, lowercase),
@@ -99,7 +99,7 @@ food-delivery-app/
   createdAt: Date (auto),
   updatedAt: Date (auto)
 }
-```
+\`\`\`
 
 **Indexes:** `email`
 
@@ -114,7 +114,7 @@ food-delivery-app/
 
 **Schema:**
 
-```typescript
+\`\`\`typescript
 {
   name: String (required),
   cuisine: String (required),
@@ -137,7 +137,7 @@ food-delivery-app/
   createdAt: Date (auto),
   updatedAt: Date (auto)
 }
-```
+\`\`\`
 
 **Indexes:** `name`, `cuisine`
 
@@ -152,7 +152,7 @@ food-delivery-app/
 
 **Schema:**
 
-```typescript
+\`\`\`typescript
 {
   customerId: String (required, indexed),
   restaurantId: String (required, indexed),
@@ -175,7 +175,7 @@ food-delivery-app/
   createdAt: Date (auto),
   updatedAt: Date (auto)
 }
-```
+\`\`\`
 
 **Indexes:** `customerId + createdAt`, `restaurantId + status`
 
@@ -190,7 +190,7 @@ food-delivery-app/
 
 **Schema:**
 
-```typescript
+\`\`\`typescript
 {
   customerId: String (required, indexed),
   restaurantId: String (required, indexed),
@@ -202,7 +202,7 @@ food-delivery-app/
   createdAt: Date (auto),
   updatedAt: Date (auto)
 }
-```
+\`\`\`
 
 **Indexes:** `customerId + date`, `restaurantId + date + status`
 
@@ -223,7 +223,7 @@ Create new user account.
 
 **Request:**
 
-```json
+\`\`\`json
 {
   "name": "John Doe",
   "email": "john@example.com",
@@ -232,11 +232,11 @@ Create new user account.
   "role": "customer",
   "address": "123 Main St, Bangalore"
 }
-```
+\`\`\`
 
 **Response (201):**
 
-```json
+\`\`\`json
 {
   "message": "User created successfully",
   "user": {
@@ -250,7 +250,7 @@ Create new user account.
     "createdAt": "2025-11-25T10:00:00.000Z"
   }
 }
-```
+\`\`\`
 
 #### POST `/api/auth/login`
 
@@ -258,24 +258,24 @@ Authenticate user.
 
 **Request:**
 
-```json
+\`\`\`json
 {
   "email": "john@example.com",
   "password": "securepassword",
   "role": "customer"
 }
-```
+\`\`\`
 
 **Response (200):**
 
-```json
+\`\`\`json
 {
   "message": "Login successful",
   "user": {
     /* same as signup response */
   }
 }
-```
+\`\`\`
 
 ### Users
 
@@ -285,14 +285,14 @@ Get user by ID.
 
 **Response (200):**
 
-```json
+\`\`\`json
 {
   "id": "507f1f77bcf86cd799439011",
   "name": "John Doe",
   "email": "john@example.com"
   /* ... other fields ... */
 }
-```
+\`\`\`
 
 #### PUT `/api/users/[id]`
 
@@ -300,24 +300,24 @@ Update user profile.
 
 **Request:**
 
-```json
+\`\`\`json
 {
   "name": "John Updated",
   "phone": "+91 99999 99999",
   "address": "456 New St, Mumbai"
 }
-```
+\`\`\`
 
 **Response (200):**
 
-```json
+\`\`\`json
 {
   "message": "User updated successfully",
   "user": {
     /* updated user data */
   }
 }
-```
+\`\`\`
 
 ### Restaurants
 
@@ -327,7 +327,7 @@ Get all restaurants (sorted by rating).
 
 **Response (200):**
 
-```json
+\`\`\`json
 [
   {
     "id": "507f1f77bcf86cd799439012",
@@ -343,7 +343,7 @@ Get all restaurants (sorted by rating).
     /* ... other fields ... */
   }
 ]
-```
+\`\`\`
 
 #### GET `/api/restaurants/[id]`
 
@@ -369,7 +369,7 @@ Create new order.
 
 **Request:**
 
-```json
+\`\`\`json
 {
   "customerId": "507f1f77bcf86cd799439011",
   "restaurantId": "507f1f77bcf86cd799439012",
@@ -390,7 +390,7 @@ Create new order.
   "status": "pending",
   "deliveryAddress": "123 Main St, Bangalore"
 }
-```
+\`\`\`
 
 ### Bookings
 
@@ -408,7 +408,7 @@ Create new booking.
 
 **Request:**
 
-```json
+\`\`\`json
 {
   "customerId": "507f1f77bcf86cd799439011",
   "restaurantId": "507f1f77bcf86cd799439012",
@@ -418,7 +418,7 @@ Create new booking.
   "specialRequests": "Window seat preferred",
   "status": "pending"
 }
-```
+\`\`\`
 
 ### Database Management
 
@@ -428,7 +428,7 @@ Seed database with mock restaurant data.
 
 **Response (200):**
 
-```json
+\`\`\`json
 {
   "message": "Database seeded successfully",
   "count": 4,
@@ -439,7 +439,7 @@ Seed database with mock restaurant data.
     { "id": "...", "name": "Sushi Express" }
   ]
 }
-```
+\`\`\`
 
 ## Setup Instructions
 
@@ -447,40 +447,40 @@ Seed database with mock restaurant data.
 
 1. **Install dependencies:**
 
-   ```bash
+   \`\`\`bash
    pnpm install
-   ```
+   \`\`\`
 
 2. **Run setup script:**
 
-   ```bash
+   \`\`\`bash
    pnpm setup:db
-   ```
+   \`\`\`
 
    Follow the interactive prompts to configure MongoDB Atlas.
 
 3. **Start development server:**
 
-   ```bash
+   \`\`\`bash
    pnpm dev
-   ```
+   \`\`\`
 
 4. **Seed the database:**
 
-   ```bash
+   \`\`\`bash
    pnpm seed
-   ```
+   \`\`\`
 
    Or manually:
 
-   ```bash
+   \`\`\`bash
    Invoke-WebRequest -Uri http://localhost:3000/api/seed -Method POST
-   ```
+   \`\`\`
 
 5. **Open the app:**
-   ```
+   \`\`\`
    http://localhost:3000
-   ```
+   \`\`\`
 
 ### Manual Setup
 
@@ -503,47 +503,47 @@ Seed database with mock restaurant data.
 
 4. **Configure environment:**
 
-   ```bash
+   \`\`\`bash
    cp .env.example .env.local
-   ```
+   \`\`\`
 
    Edit `.env.local` and add your MongoDB URI:
 
-   ```env
+   \`\`\`env
    MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/food-delivery-app?retryWrites=true&w=majority
-   ```
+   \`\`\`
 
 5. **Run the app:**
-   ```bash
+   \`\`\`bash
    pnpm dev
    pnpm seed
-   ```
+   \`\`\`
 
 ## Testing the Integration
 
 ### 1. Test User Registration
 
-```bash
+\`\`\`bash
 Invoke-WebRequest -Uri http://localhost:3000/api/auth/signup `
   -Method POST `
   -Headers @{"Content-Type"="application/json"} `
   -Body '{"name":"Test User","email":"test@example.com","password":"password123","phone":"+91 98765 43210","role":"customer"}'
-```
+\`\`\`
 
 ### 2. Test User Login
 
-```bash
+\`\`\`bash
 Invoke-WebRequest -Uri http://localhost:3000/api/auth/login `
   -Method POST `
   -Headers @{"Content-Type"="application/json"} `
   -Body '{"email":"test@example.com","password":"password123","role":"customer"}'
-```
+\`\`\`
 
 ### 3. Test Restaurant Retrieval
 
-```bash
+\`\`\`bash
 Invoke-WebRequest -Uri http://localhost:3000/api/restaurants
-```
+\`\`\`
 
 ### 4. Test Using the App
 
@@ -605,14 +605,14 @@ Invoke-WebRequest -Uri http://localhost:3000/api/restaurants
 
 Use MongoDB Compass (GUI tool):
 
-```bash
+\`\`\`bash
 # Download from: https://www.mongodb.com/products/compass
 # Connect using your MONGODB_URI
-```
+\`\`\`
 
 ### Command Line (mongosh)
 
-```bash
+\`\`\`bash
 # Connect to Atlas
 mongosh "mongodb+srv://cluster.mongodb.net/food-delivery-app" --username <username>
 
@@ -627,7 +627,7 @@ db.restaurants.find({ cuisine: "Indian" }).pretty()
 
 # Count documents
 db.orders.countDocuments()
-```
+\`\`\`
 
 ## Troubleshooting
 
@@ -664,9 +664,9 @@ db.orders.countDocuments()
 
 Add to `.env.local`:
 
-```env
+\`\`\`env
 DEBUG=mongoose:*
-```
+\`\`\`
 
 ## Performance Optimization
 
@@ -701,10 +701,10 @@ MongoDB connection is cached globally to prevent multiple connections.
 
 Required in production:
 
-```env
+\`\`\`env
 MONGODB_URI=mongodb+srv://...
 NODE_ENV=production
-```
+\`\`\`
 
 ### Scaling
 

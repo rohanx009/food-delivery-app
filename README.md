@@ -32,7 +32,7 @@
 
 ## 📦 Installation
 
-```bash
+\`\`\`bash
 # Clone the repository
 git clone https://github.com/rohanx009/food-delivery-app.git
 
@@ -48,7 +48,7 @@ cp .env.example .env.local
 
 # Run development server
 pnpm dev
-```
+\`\`\`
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -86,13 +86,13 @@ For comprehensive setup instructions including troubleshooting, IDE configuratio
 
 ### Manual Deployment
 
-```bash
+\`\`\`bash
 # Build the application
 pnpm build
 
 # Start production server
 pnpm start
-```
+\`\`\`
 
 ## 🔧 Available Scripts
 
@@ -103,7 +103,7 @@ pnpm start
 
 ## 📁 Project Structure
 
-```
+\`\`\`
 food-delivery-app/
 ├── app/                    # Next.js app directory
 │   ├── auth/              # Authentication pages
@@ -114,7 +114,7 @@ food-delivery-app/
 ├── context/              # React context providers
 ├── lib/                  # Utility functions and types
 └── public/               # Static assets
-```
+\`\`\`
 
 ## 🛠️ Development Tools
 

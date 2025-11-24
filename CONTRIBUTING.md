@@ -29,25 +29,25 @@ Enhancement suggestions are tracked as GitHub issues. When creating an enhanceme
 
 1. Fork the repository
 2. Create a new branch from `main`:
-   ```bash
+   \`\`\`bash
    git checkout -b feature/amazing-feature
-   ```
+   \`\`\`
 3. Make your changes following the coding standards
 4. Commit your changes:
-   ```bash
+   \`\`\`bash
    git commit -m 'Add some amazing feature'
-   ```
+   \`\`\`
 5. Push to the branch:
-   ```bash
+   \`\`\`bash
    git push origin feature/amazing-feature
-   ```
+   \`\`\`
 6. Open a Pull Request
 
 ## 💻 Development Process
 
 ### Setup Development Environment
 
-```bash
+\`\`\`bash
 # Clone your fork
 git clone https://github.com/YOUR_USERNAME/food-delivery-app.git
 cd food-delivery-app
@@ -57,7 +57,7 @@ pnpm install
 
 # Start development server
 pnpm dev
-```
+\`\`\`
 
 ### Code Style
 
@@ -82,11 +82,11 @@ Follow the [Conventional Commits](https://www.conventionalcommits.org/) specific
 * `chore:` - Changes to build process or auxiliary tools
 
 Example:
-```
+\`\`\`
 feat: add search functionality to restaurant list
 fix: resolve cart item duplication issue
 docs: update API documentation
-```
+\`\`\`
 
 ### Testing
 
@@ -97,7 +97,7 @@ docs: update API documentation
 
 ## 📁 Project Structure
 
-```
+\`\`\`
 food-delivery-app/
 ├── app/                    # Next.js App Router pages
 │   ├── auth/              # Authentication pages
@@ -109,7 +109,7 @@ food-delivery-app/
 ├── lib/                  # Utilities, types, and mock data
 ├── public/               # Static assets
 └── docs/                 # Project documentation
-```
+\`\`\`
 
 ## 🎨 Component Guidelines
 
@@ -122,7 +122,7 @@ food-delivery-app/
 5. Add prop validation with TypeScript interfaces
 
 Example:
-```typescript
+\`\`\`typescript
 interface ComponentProps {
   title: string
   onClick?: () => void
@@ -131,7 +131,7 @@ interface ComponentProps {
 export function Component({ title, onClick }: ComponentProps) {
   // Component logic
 }
-```
+\`\`\`
 
 ## 🔍 Code Review Process
 

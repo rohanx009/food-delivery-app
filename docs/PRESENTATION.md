@@ -82,7 +82,7 @@ This guide will help you effectively present the Food Delivery App to organizers
 ### 3. Technical Overview (3-4 minutes)
 
 **Tech Stack Highlight:**
-```
+\`\`\`
 Frontend:
 ✓ Next.js 16 (App Router)
 ✓ React 19
@@ -99,7 +99,7 @@ Infrastructure:
 ✓ Deployed on Vercel
 ✓ GitHub Actions CI/CD
 ✓ Automated testing pipeline
-```
+\`\`\`
 
 **Key Technical Features:**
 
@@ -295,7 +295,7 @@ Have these ready in `docs/screenshots/`:
 
 ## 🎬 Demo Script Template
 
-```
+\`\`\`
 [OPENING]
 "Good [morning/afternoon], my name is [Your Name], and today I'll be presenting 
 my Food Delivery Platform."
@@ -336,7 +336,7 @@ real-time tracking..."
 
 [Q&A]
 [Answer confidently, refer to docs if needed]
-```
+\`\`\`
 
 ---
 

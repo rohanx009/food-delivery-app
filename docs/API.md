@@ -6,10 +6,10 @@ This document describes the data structures, types, and mock API used in the Foo
 
 ## Base URL
 
-```
+\`\`\`
 Local Development: http://localhost:3000
 Production: https://your-deployment-url.vercel.app
-```
+\`\`\`
 
 ## Authentication
 
@@ -20,29 +20,29 @@ Production: https://your-deployment-url.vercel.app
 **Current Implementation:** Client-side mock authentication via `AuthContext`
 
 **Request Body:**
-```typescript
+\`\`\`typescript
 {
   email: string
   password: string
   role: "customer" | "restaurant_admin" | "delivery_partner"
 }
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   user: User
   token?: string  // For future backend integration
 }
-```
+\`\`\`
 
 ### Signup
 
 **Endpoint:** `POST /api/auth/signup` (To be implemented)
 
 **Request Body:**
-```typescript
+\`\`\`typescript
 {
   name: string
   email: string
@@ -50,7 +50,7 @@ Production: https://your-deployment-url.vercel.app
   phone: string
   role: "customer" | "restaurant_admin" | "delivery_partner"
 }
-```
+\`\`\`
 
 ### Logout
 
@@ -64,7 +64,7 @@ Production: https://your-deployment-url.vercel.app
 
 ### User
 
-```typescript
+\`\`\`typescript
 enum UserRole {
   CUSTOMER = "customer",
   RESTAURANT_ADMIN = "restaurant_admin",
@@ -81,10 +81,10 @@ interface User {
   profileImage?: string
   createdAt: Date
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "user-123",
   "name": "John Doe",
@@ -94,11 +94,11 @@ interface User {
   "address": "123 Main St, City",
   "createdAt": "2025-11-24T10:00:00Z"
 }
-```
+\`\`\`
 
 ### Restaurant
 
-```typescript
+\`\`\`typescript
 interface Restaurant {
   id: string
   name: string
@@ -111,10 +111,10 @@ interface Restaurant {
   imageUrl: string
   menu: MenuItem[]
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "1",
   "name": "Spice Villa",
@@ -127,11 +127,11 @@ interface Restaurant {
   "imageUrl": "/indian-restaurant-exterior.jpg",
   "menu": []
 }
-```
+\`\`\`
 
 ### MenuItem
 
-```typescript
+\`\`\`typescript
 interface MenuItem {
   id: string
   name: string
@@ -141,10 +141,10 @@ interface MenuItem {
   imageUrl: string
   restaurantId?: string
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "1-1",
   "name": "Samosa",
@@ -153,11 +153,11 @@ interface MenuItem {
   "description": "Crispy triangular pastry with potato filling",
   "imageUrl": "/crispy-golden-samosas.png"
 }
-```
+\`\`\`
 
 ### CartItem
 
-```typescript
+\`\`\`typescript
 interface CartItem {
   id: string
   menuItem: {
@@ -169,10 +169,10 @@ interface CartItem {
   quantity: number
   restaurantId: string
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "cart-item-1",
   "menuItem": {
@@ -184,11 +184,11 @@ interface CartItem {
   "quantity": 2,
   "restaurantId": "1"
 }
-```
+\`\`\`
 
 ### Order
 
-```typescript
+\`\`\`typescript
 type OrderStatus = 
   | "pending" 
   | "confirmed" 
@@ -208,10 +208,10 @@ interface Order {
   createdAt: Date
   estimatedDelivery?: Date
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "order-123",
   "customerId": "user-123",
@@ -223,11 +223,11 @@ interface Order {
   "createdAt": "2025-11-24T10:00:00Z",
   "estimatedDelivery": "2025-11-24T11:00:00Z"
 }
-```
+\`\`\`
 
 ### TableBooking
 
-```typescript
+\`\`\`typescript
 type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled"
 
 interface TableBooking {
@@ -241,10 +241,10 @@ interface TableBooking {
   status: BookingStatus
   createdAt: Date
 }
-```
+\`\`\`
 
 **Example:**
-```json
+\`\`\`json
 {
   "id": "booking-123",
   "customerId": "user-123",
@@ -256,7 +256,7 @@ interface TableBooking {
   "status": "confirmed",
   "createdAt": "2025-11-24T10:00:00Z"
 }
-```
+\`\`\`
 
 ---
 
@@ -266,9 +266,9 @@ interface TableBooking {
 
 #### Get All Restaurants
 
-```
+\`\`\`
 GET /api/restaurants
-```
+\`\`\`
 
 **Query Parameters:**
 - `cuisine` (optional): Filter by cuisine type
@@ -276,86 +276,86 @@ GET /api/restaurants
 - `rating` (optional): Minimum rating filter
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Restaurant[]
   count: number
 }
-```
+\`\`\`
 
 #### Get Restaurant by ID
 
-```
+\`\`\`
 GET /api/restaurants/:id
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Restaurant
 }
-```
+\`\`\`
 
 #### Search Restaurants
 
-```
+\`\`\`
 GET /api/restaurants/search?q=pizza
-```
+\`\`\`
 
 **Query Parameters:**
 - `q`: Search query
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Restaurant[]
   count: number
 }
-```
+\`\`\`
 
 ### Menu
 
 #### Get Restaurant Menu
 
-```
+\`\`\`
 GET /api/restaurants/:id/menu
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: MenuItem[]
 }
-```
+\`\`\`
 
 #### Get Menu Item Details
 
-```
+\`\`\`
 GET /api/menu/:itemId
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: MenuItem
 }
-```
+\`\`\`
 
 ### Orders
 
 #### Create Order
 
-```
+\`\`\`
 POST /api/orders
-```
+\`\`\`
 
 **Request Body:**
-```typescript
+\`\`\`typescript
 {
   restaurantId: string
   items: Array<{
@@ -364,22 +364,22 @@ POST /api/orders
   }>
   deliveryAddress: string
 }
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Order
   message: string
 }
-```
+\`\`\`
 
 #### Get User Orders
 
-```
+\`\`\`
 GET /api/orders/user/:userId
-```
+\`\`\`
 
 **Query Parameters:**
 - `status` (optional): Filter by order status
@@ -387,60 +387,60 @@ GET /api/orders/user/:userId
 - `offset` (optional): Pagination offset
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Order[]
   count: number
 }
-```
+\`\`\`
 
 #### Get Order Details
 
-```
+\`\`\`
 GET /api/orders/:orderId
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Order
 }
-```
+\`\`\`
 
 #### Update Order Status
 
-```
+\`\`\`
 PATCH /api/orders/:orderId/status
-```
+\`\`\`
 
 **Request Body:**
-```typescript
+\`\`\`typescript
 {
   status: OrderStatus
 }
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: Order
   message: string
 }
-```
+\`\`\`
 
 ### Bookings
 
 #### Create Booking
 
-```
+\`\`\`
 POST /api/bookings
-```
+\`\`\`
 
 **Request Body:**
-```typescript
+\`\`\`typescript
 {
   restaurantId: string
   date: string  // ISO date format
@@ -448,44 +448,44 @@ POST /api/bookings
   partySize: number
   specialRequests?: string
 }
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: TableBooking
   message: string
 }
-```
+\`\`\`
 
 #### Get User Bookings
 
-```
+\`\`\`
 GET /api/bookings/user/:userId
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   data: TableBooking[]
 }
-```
+\`\`\`
 
 #### Cancel Booking
 
-```
+\`\`\`
 DELETE /api/bookings/:bookingId
-```
+\`\`\`
 
 **Response:**
-```typescript
+\`\`\`typescript
 {
   success: boolean
   message: string
 }
-```
+\`\`\`
 
 ---
 
@@ -509,7 +509,7 @@ Currently, the app uses mock data defined in `lib/mock-data.ts`:
 
 ### Accessing Mock Data
 
-```typescript
+\`\`\`typescript
 import { mockRestaurants, type Restaurant, type MenuItem } from '@/lib/mock-data'
 
 // Get all restaurants
@@ -520,7 +520,7 @@ const restaurant = mockRestaurants.find(r => r.id === '1')
 
 // Get menu items
 const menuItems = restaurant?.menu
-```
+\`\`\`
 
 ---
 
@@ -528,7 +528,7 @@ const menuItems = restaurant?.menu
 
 All API endpoints should return consistent error responses:
 
-```typescript
+\`\`\`typescript
 {
   success: false
   error: {
@@ -537,7 +537,7 @@ All API endpoints should return consistent error responses:
     details?: any
   }
 }
-```
+\`\`\`
 
 **Common Error Codes:**
 - `AUTH_REQUIRED`: Authentication required
