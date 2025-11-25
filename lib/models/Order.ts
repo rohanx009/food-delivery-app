@@ -27,6 +27,12 @@ export interface IOrder {
     | "cancelled";
   deliveryAddress: string;
   estimatedDelivery?: Date;
+  // Payment fields
+  paymentMethod: "card" | "upi" | "wallet" | "cash";
+  paymentStatus: "pending" | "completed" | "failed" | "refunded";
+  paymentId?: string; // Stripe/Razorpay payment ID
+  transactionId?: string; // Transaction reference
+  paidAt?: Date; // Payment completion timestamp
   createdAt: Date;
   updatedAt: Date;
 }
@@ -88,6 +94,27 @@ const OrderSchema = new Schema<IOrder>(
       required: [true, "Delivery address is required"],
     },
     estimatedDelivery: {
+      type: Date,
+    },
+    // Payment fields
+    paymentMethod: {
+      type: String,
+      enum: ["card", "upi", "wallet", "cash"],
+      required: [true, "Payment method is required"],
+      default: "cash",
+    },
+    paymentStatus: {
+      type: String,
+      enum: ["pending", "completed", "failed", "refunded"],
+      default: "pending",
+    },
+    paymentId: {
+      type: String,
+    },
+    transactionId: {
+      type: String,
+    },
+    paidAt: {
       type: Date,
     },
   },
