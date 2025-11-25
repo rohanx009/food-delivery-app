@@ -2,6 +2,10 @@
 
 > A comprehensive, multi-role food delivery platform built with modern web technologies
 
+## 🌐 Live Demo
+
+**[🚀 View Live Website](https://rohanx009-food-delivery-app.vercel.app)** ← Click here to try the app!
+
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/rohangowda290-4005s-projects/food-delivery-app)
 [![CI/CD](https://github.com/rohanx009/food-delivery-app/actions/workflows/ci.yml/badge.svg)](https://github.com/rohanx009/food-delivery-app/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -33,20 +37,27 @@
 ## 📦 Installation
 
 \`\`\`bash
+
 # Clone the repository
+
 git clone https://github.com/rohanx009/food-delivery-app.git
 
 # Navigate to project directory
+
 cd food-delivery-app
 
 # Install dependencies
+
 pnpm install
 
 # Set up environment variables
+
 cp .env.example .env.local
+
 # Edit .env.local and add your MongoDB connection string
 
 # Run development server
+
 pnpm dev
 \`\`\`
 
@@ -87,10 +98,13 @@ For comprehensive setup instructions including troubleshooting, IDE configuratio
 ### Manual Deployment
 
 \`\`\`bash
+
 # Build the application
+
 pnpm build
 
 # Start production server
+
 pnpm start
 \`\`\`
 
@@ -105,15 +119,15 @@ pnpm start
 
 \`\`\`
 food-delivery-app/
-├── app/                    # Next.js app directory
-│   ├── auth/              # Authentication pages
-│   ├── customer/          # Customer-facing pages
-│   └── dashboard/         # Role-based dashboards
-├── components/            # Reusable React components
-│   └── ui/               # shadcn/ui components
-├── context/              # React context providers
-├── lib/                  # Utility functions and types
-└── public/               # Static assets
+├── app/ # Next.js app directory
+│ ├── auth/ # Authentication pages
+│ ├── customer/ # Customer-facing pages
+│ └── dashboard/ # Role-based dashboards
+├── components/ # Reusable React components
+│ └── ui/ # shadcn/ui components
+├── context/ # React context providers
+├── lib/ # Utility functions and types
+└── public/ # Static assets
 \`\`\`
 
 ## 🛠️ Development Tools
@@ -261,7 +275,7 @@ See [CHANGELOG.md](CHANGELOG.md) for a list of changes (to be created).
 
 ## 🔗 Links
 
-- **Live Demo**: [https://food-delivery-app-rohan.vercel.app](https://food-delivery-app-rohan.vercel.app)
+- **Live Demo**: [https://rohanx009-food-delivery-app.vercel.app](https://rohanx009-food-delivery-app.vercel.app)
 - **GitHub Repository**: [https://github.com/rohanx009/food-delivery-app](https://github.com/rohanx009/food-delivery-app)
 - **Issues**: [Report a bug or request a feature](https://github.com/rohanx009/food-delivery-app/issues)
 - **Discussions**: [Join the conversation](https://github.com/rohanx009/food-delivery-app/discussions)
