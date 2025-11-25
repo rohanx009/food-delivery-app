@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { useAuth } from "@/context/auth-context";
+import { useCart } from "@/context/cart-context";
 import { mockRestaurants } from "@/lib/mock-data";
 import { MenuItemCard } from "@/components/menu-item-card";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,12 @@ import type { CartItem, MenuItem } from "@/lib/types";
 
 export default function MenuPage() {
   const { user, isLoading } = useAuth();
+  const { cart, addToCart, updateQuantity, getCartCount, getCartTotal } =
+    useCart();
   const router = useRouter();
   const params = useParams();
   const restaurantId = params.id as string;
 
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [shouldRedirect, setShouldRedirect] = useState(false);
 
   const restaurant = useMemo(
@@ -47,41 +49,24 @@ export default function MenuPage() {
     return null;
   }
 
-  const handleAddToCart = (menuItem: MenuItem, quantity: number) => {
-    setCartItems((prev) => {
-      const existingItem = prev.find(
-        (item) => item.menuItem.id === menuItem.id
-      );
-      if (existingItem) {
-        return prev.map((item) =>
-          item.menuItem.id === menuItem.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      }
-      return [
-        ...prev,
-        {
-          id: Math.random().toString(),
-          menuItem: {
-            id: menuItem.id,
-            name: menuItem.name,
-            price: menuItem.price,
-            imageUrl: menuItem.imageUrl,
-          },
-          quantity,
-          restaurantId,
-        },
-      ];
-    });
+  const getItemQuantity = (itemId: string) => {
+    return cart.find((item) => item.id === itemId)?.quantity || 0;
+  };
+
+  const handleIncrement = (menuItem: MenuItem) => {
+    addToCart(menuItem, restaurant.id, restaurant.name);
+  };
+
+  const handleDecrement = (menuItem: MenuItem) => {
+    const currentQty = getItemQuantity(menuItem.id);
+    if (currentQty > 0) {
+      updateQuantity(menuItem.id, currentQty - 1);
+    }
   };
 
   const categories = [...new Set(restaurant.menu.map((item) => item.category))];
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-  const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.menuItem.price * item.quantity,
-    0
-  );
+  const cartCount = getCartCount();
+  const cartTotal = getCartTotal();
 
   return (
     <div className="min-h-screen bg-background">
@@ -100,10 +85,7 @@ export default function MenuPage() {
             </div>
           </div>
           <Button
-            onClick={() => {
-              localStorage.setItem("currentCart", JSON.stringify(cartItems));
-              router.push("/customer/cart");
-            }}
+            onClick={() => router.push("/customer/checkout")}
             disabled={cartCount === 0}
             className="bg-primary hover:bg-primary/90 text-primary-foreground"
           >
@@ -134,7 +116,9 @@ export default function MenuPage() {
                   <MenuItemCard
                     key={item.id}
                     item={item}
-                    onAddToCart={handleAddToCart}
+                    quantity={getItemQuantity(item.id)}
+                    onAdd={() => handleIncrement(item)}
+                    onRemove={() => handleDecrement(item)}
                   />
                 ))}
             </div>

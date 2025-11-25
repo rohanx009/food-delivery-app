@@ -42,12 +42,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setIsInitialized(true);
   }, []);
 
-  // Save cart to localStorage whenever it changes
-  useEffect(() => {
-    if (isInitialized) {
-      localStorage.setItem("foodDeliveryCart", JSON.stringify(cart));
+  // Helper to save cart
+  const saveCart = (newCart: CartItem[]) => {
+    if (typeof window === "undefined") return;
+    try {
+      localStorage.setItem("foodDeliveryCart", JSON.stringify(newCart));
+      console.log("Cart saved to localStorage:", newCart);
+    } catch (error) {
+      console.error("Failed to save cart to localStorage:", error);
     }
-  }, [cart, isInitialized]);
+  };
 
   const addToCart = (
     item: MenuItem,
@@ -56,42 +60,53 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   ) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
+      let newCart;
 
       if (existingItem) {
         // Increment quantity if item already in cart
-        return prevCart.map((cartItem) =>
+        newCart = prevCart.map((cartItem) =>
           cartItem.id === item.id
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       } else {
         // Add new item to cart
-        return [
+        newCart = [
           ...prevCart,
           { ...item, quantity: 1, restaurantId, restaurantName },
         ];
       }
+      saveCart(newCart);
+      return newCart;
     });
   };
 
   const removeFromCart = (itemId: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== itemId));
+    setCart((prevCart) => {
+      const newCart = prevCart.filter((item) => item.id !== itemId);
+      saveCart(newCart);
+      return newCart;
+    });
   };
 
   const updateQuantity = (itemId: string, quantity: number) => {
     if (quantity === 0) {
       removeFromCart(itemId);
     } else {
-      setCart((prevCart) =>
-        prevCart.map((item) =>
+      setCart((prevCart) => {
+        const newCart = prevCart.map((item) =>
           item.id === itemId ? { ...item, quantity } : item
-        )
-      );
+        );
+        saveCart(newCart);
+        return newCart;
+      });
     }
   };
 
   const clearCart = () => {
-    setCart([]);
+    const newCart: CartItem[] = [];
+    setCart(newCart);
+    saveCart(newCart);
   };
 
   const getCartTotal = () => {

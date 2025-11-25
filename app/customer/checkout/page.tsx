@@ -136,7 +136,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
+    <main className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
       {/* Header */}
       <header className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -212,7 +212,7 @@ export default function CheckoutPage() {
             {/* Address Step */}
             {step === "address" && (
               <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-                <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 border-b border-slate-200 dark:border-slate-800">
+                <div className="bg-linear-to-r from-primary/10 to-primary/5 p-6 border-b border-slate-200 dark:border-slate-800">
                   <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
                     Delivery Address
                   </h2>
@@ -295,7 +295,7 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 {/* Payment Method Selection */}
                 <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6 border-b border-slate-200 dark:border-slate-800">
+                  <div className="bg-linear-to-r from-primary/10 to-primary/5 p-6 border-b border-slate-200 dark:border-slate-800">
                     <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
                       <Lock className="w-6 h-6" />
                       Secure Payment
@@ -617,7 +617,7 @@ export default function CheckoutPage() {
             {/* Confirmation Step */}
             {step === "confirmation" && (
               <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
-                <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-12 text-center">
+                <div className="bg-linear-to-br from-green-500 to-emerald-600 p-12 text-center">
                   <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                     <CheckCircle2 className="w-12 h-12 text-green-500" />
                   </div>
@@ -629,7 +629,7 @@ export default function CheckoutPage() {
                   </p>
                 </div>
                 <div className="p-8">
-                  <div className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 rounded-xl mb-6">
+                  <div className="bg-linear-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 rounded-xl mb-6">
                     <p className="text-sm text-slate-600 dark:text-slate-400 mb-1">
                       Order ID
                     </p>
@@ -685,7 +685,7 @@ export default function CheckoutPage() {
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-800 overflow-hidden sticky top-24">
-              <div className="bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 border-b border-slate-200 dark:border-slate-800">
+              <div className="bg-linear-to-r from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-6 border-b border-slate-200 dark:border-slate-800">
                 <h3 className="text-lg font-bold text-slate-900 dark:text-white">
                   Order Summary
                 </h3>

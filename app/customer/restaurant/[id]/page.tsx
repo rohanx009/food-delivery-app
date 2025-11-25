@@ -132,16 +132,13 @@ export default function RestaurantPage() {
             <div className="space-y-2 text-sm">
               {restaurant.address && (
                 <div className="flex items-start gap-2">
-                  <MapPin
-                    size={16}
-                    className="mt-0.5 flex-shrink-0 text-primary"
-                  />
+                  <MapPin size={16} className="mt-0.5 shrink-0 text-primary" />
                   <span>{restaurant.address}</span>
                 </div>
               )}
               {restaurant.phone && (
                 <div className="flex items-center gap-2">
-                  <Phone size={16} className="flex-shrink-0 text-primary" />
+                  <Phone size={16} className="shrink-0 text-primary" />
                   <a
                     href={`tel:${restaurant.phone}`}
                     className="hover:underline"
@@ -197,7 +194,7 @@ export default function RestaurantPage() {
                     <img
                       src={item.imageUrl || "/placeholder.svg"}
                       alt={item.name}
-                      className="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                      className="w-24 h-24 object-cover rounded-lg shrink-0"
                     />
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground mb-1">
