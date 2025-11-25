@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
+import { useCart } from "@/context/cart-context";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { mockRestaurants } from "@/lib/mock-data";
@@ -10,12 +11,10 @@ import type { MenuItem } from "@/lib/types";
 import Link from "next/link";
 import { MapPin, Phone, Clock, Star, ArrowLeft } from "lucide-react";
 
-interface CartItem extends MenuItem {
-  quantity: number;
-}
-
 export default function RestaurantPage() {
   const { user, isLoading } = useAuth();
+  const { cart, addToCart, updateQuantity, getCartTotal, getCartCount } =
+    useCart();
   const params = useParams();
   const router = useRouter();
   const restaurantId = params.id as string;
@@ -49,7 +48,6 @@ export default function RestaurantPage() {
   const restaurant =
     mockRestaurants.find((r) => r.id === restaurantId) || mockRestaurants[0];
 
-  const [cart, setCart] = useState<CartItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories = Array.from(
@@ -59,39 +57,11 @@ export default function RestaurantPage() {
     ? restaurant.menu.filter((item) => item.category === selectedCategory)
     : restaurant.menu;
 
-  const addToCart = (item: MenuItem) => {
-    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
-    if (existingItem) {
-      setCart(
-        cart.map((cartItem) =>
-          cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + 1 }
-            : cartItem
-        )
-      );
-    } else {
-      setCart([...cart, { ...item, quantity: 1 }]);
-    }
+  const handleAddToCart = (item: MenuItem) => {
+    addToCart(item, restaurant.id, restaurant.name);
   };
 
-  const removeFromCart = (itemId: string) => {
-    setCart(cart.filter((item) => item.id !== itemId));
-  };
-
-  const updateQuantity = (itemId: string, quantity: number) => {
-    if (quantity === 0) {
-      removeFromCart(itemId);
-    } else {
-      setCart(
-        cart.map((item) => (item.id === itemId ? { ...item, quantity } : item))
-      );
-    }
-  };
-
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  const subtotal = getCartTotal();
   const tax = subtotal * 0.1;
   const deliveryFee = restaurant.deliveryFee;
   const total = subtotal + tax + deliveryFee;
@@ -120,7 +90,7 @@ export default function RestaurantPage() {
           </span>
           <div className="text-right">
             <p className="text-sm text-muted-foreground">
-              Cart: {cart.length} items
+              Cart: {getCartCount()} items
             </p>
           </div>
         </div>
@@ -242,7 +212,7 @@ export default function RestaurantPage() {
                         </span>
                         <Button
                           size="sm"
-                          onClick={() => addToCart(item)}
+                          onClick={() => handleAddToCart(item)}
                           className="bg-primary hover:bg-primary/90"
                         >
                           Add

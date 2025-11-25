@@ -5,6 +5,7 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
+import { useCart } from "@/context/cart-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -21,6 +22,7 @@ import {
 
 export default function CheckoutPage() {
   const { user, isLoading } = useAuth();
+  const { cart, getCartTotal, clearCart } = useCart();
   const router = useRouter();
   const [step, setStep] = useState<"address" | "payment" | "confirmation">(
     "address"
@@ -689,24 +691,27 @@ export default function CheckoutPage() {
                 </h3>
               </div>
               <div className="p-6 space-y-4">
-                {/* Mock Order Items */}
+                {/* Cart Items */}
                 <div className="space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-600 dark:text-slate-400">
-                      2x Margherita Pizza
-                    </span>
-                    <span className="font-semibold text-slate-900 dark:text-white">
-                      $24.00
-                    </span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-slate-600 dark:text-slate-400">
-                      1x Caesar Salad
-                    </span>
-                    <span className="font-semibold text-slate-900 dark:text-white">
-                      $12.00
-                    </span>
-                  </div>
+                  {cart.length > 0 ? (
+                    cart.map((item) => (
+                      <div
+                        key={item.id}
+                        className="flex justify-between text-sm"
+                      >
+                        <span className="text-slate-600 dark:text-slate-400">
+                          {item.quantity}x {item.name}
+                        </span>
+                        <span className="font-semibold text-slate-900 dark:text-white">
+                          ₹{(item.price * item.quantity).toFixed(2)}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-center text-slate-500 dark:text-slate-400 py-4">
+                      Your cart is empty
+                    </p>
+                  )}
                 </div>
                 <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-2">
                   <div className="flex justify-between text-sm">
@@ -714,7 +719,7 @@ export default function CheckoutPage() {
                       Subtotal
                     </span>
                     <span className="text-slate-900 dark:text-white">
-                      $36.00
+                      ₹{getCartTotal().toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
@@ -722,15 +727,18 @@ export default function CheckoutPage() {
                       Delivery Fee
                     </span>
                     <span className="text-slate-900 dark:text-white">
-                      $3.99
+                      ₹
+                      {cart.length > 0 && cart[0].restaurantId
+                        ? "40.00"
+                        : "0.00"}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-600 dark:text-slate-400">
-                      Tax
+                      Tax (10%)
                     </span>
                     <span className="text-slate-900 dark:text-white">
-                      $3.20
+                      ₹{(getCartTotal() * 0.1).toFixed(2)}
                     </span>
                   </div>
                 </div>
@@ -740,7 +748,12 @@ export default function CheckoutPage() {
                       Total
                     </span>
                     <span className="text-lg font-bold text-primary">
-                      $43.19
+                      ₹
+                      {(
+                        getCartTotal() +
+                        getCartTotal() * 0.1 +
+                        (cart.length > 0 ? 40 : 0)
+                      ).toFixed(2)}
                     </span>
                   </div>
                 </div>
