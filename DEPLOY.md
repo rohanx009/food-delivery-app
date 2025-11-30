@@ -34,13 +34,17 @@ Your app will be available at: `https://food-delivery-app-[random].vercel.app`
 
 No environment variables are needed! The app uses a local SQLite database by default.
 
-### For Production (PostgreSQL)
+### For Production (Vercel)
 
-If you want to deploy to production with a persistent database (recommended):
+**IMPORTANT:** Vercel requires a persistent database like PostgreSQL. SQLite will **NOT** work on Vercel because the filesystem is ephemeral (data will be lost).
 
-1. Go to Project Settings → Environment Variables
-2. Add: `DATABASE_URL` with your PostgreSQL connection string (e.g., from Neon, Supabase, or Vercel Postgres)
-3. Redeploy
+1. **Create a PostgreSQL Database**: Use a provider like [Neon](https://neon.tech), [Supabase](https://supabase.com), or [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres).
+2. **Get Connection String**: Copy the `DATABASE_URL` from your provider.
+3. **Configure Vercel**:
+   - Go to Project Settings → Environment Variables
+   - Add Key: `DATABASE_URL`
+   - Add Value: Your PostgreSQL connection string
+4. **Redeploy**: Trigger a new deployment.
 
 ## Troubleshooting
 
