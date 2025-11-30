@@ -3,44 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
-}
-
-enum UserRole {
-  customer
-  restaurant_admin
-  delivery_partner
-}
-
-enum OrderStatus {
-  pending
-  confirmed
-  preparing
-  out_for_delivery
-  delivered
-  cancelled
-}
-
-enum PaymentMethod {
-  card
-  upi
-  wallet
-  cash
-}
-
-enum PaymentStatus {
-  pending
-  completed
-  failed
-  refunded
-}
-
-enum BookingStatus {
-  pending
-  confirmed
-  completed
-  cancelled
 }
 
 model User {
@@ -49,7 +13,7 @@ model User {
   email        String   @unique
   password     String
   phone        String
-  role         UserRole @default(customer)
+  role         String   @default("customer") // Enum: customer, restaurant_admin, delivery_partner
   address      String?
   profileImage String?  @default("/user-avatar.jpg")
   createdAt    DateTime @default(now())
@@ -99,11 +63,11 @@ model MenuItem {
 model Order {
   id                String        @id @default(uuid())
   totalAmount       Float
-  status            OrderStatus   @default(pending)
+  status            String        @default("pending") // Enum: pending, confirmed, preparing, out_for_delivery, delivered, cancelled
   deliveryAddress   String
   estimatedDelivery DateTime?
-  paymentMethod     PaymentMethod @default(cash)
-  paymentStatus     PaymentStatus @default(pending)
+  paymentMethod     String        @default("cash") // Enum: card, upi, wallet, cash
+  paymentStatus     String        @default("pending") // Enum: pending, completed, failed, refunded
   paymentId         String?
   transactionId     String?
   paidAt            DateTime?
@@ -136,7 +100,7 @@ model TableBooking {
   time            String
   partySize       Int
   specialRequests String?
-  status          BookingStatus @default(pending)
+  status          String        @default("pending") // Enum: pending, confirmed, completed, cancelled
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 

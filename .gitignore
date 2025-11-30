@@ -40,3 +40,7 @@ next-env.d.ts
 .pnpm-debug.log
 
 /lib/generated/prisma
+
+# sqlite
+*.db
+*.db-journal
