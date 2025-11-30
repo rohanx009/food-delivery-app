@@ -28,12 +28,18 @@ Your app will be available at: `https://food-delivery-app-[random].vercel.app`
 - ✅ Serverless functions for API routes
 - ✅ No configuration needed
 
-## Environment Variables (Optional)
+## Environment Variables
 
-If you want to add MongoDB later:
+### For Local Development (SQLite)
+
+No environment variables are needed! The app uses a local SQLite database by default.
+
+### For Production (PostgreSQL)
+
+If you want to deploy to production with a persistent database (recommended):
 
 1. Go to Project Settings → Environment Variables
-2. Add: `MONGODB_URI` with your MongoDB Atlas connection string
+2. Add: `DATABASE_URL` with your PostgreSQL connection string (e.g., from Neon, Supabase, or Vercel Postgres)
 3. Redeploy
 
 ## Troubleshooting
