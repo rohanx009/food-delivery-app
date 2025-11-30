@@ -1,29 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import User from "@/lib/models/User";
+import { prisma } from "@/database";
 import bcrypt from "bcryptjs";
 
 // POST /api/auth/login - Authenticate user
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
-
-    const { email, password, role } = await req.json();
+    const { email, password } = await req.json();
 
     // Validate required fields
-    if (!email || !password || !role) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: "Email, password, and role are required" },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
 
-    // Find user by email
-    const user = await User.findOne({ email: email.toLowerCase() });
+    // Find user
+    const user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
 
     if (!user) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid credentials" },
         { status: 401 }
       );
     }
@@ -33,36 +32,21 @@ export async function POST(req: NextRequest) {
 
     if (!isPasswordValid) {
       return NextResponse.json(
-        { error: "Invalid email or password" },
+        { error: "Invalid credentials" },
         { status: 401 }
       );
     }
 
-    // Check if role matches
-    if (user.role !== role) {
-      return NextResponse.json(
-        { error: "Invalid role for this user" },
-        { status: 403 }
-      );
-    }
-
-    // Return user without password
-    const userObject = user.toObject();
+    // Return user info (excluding password)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userWithoutPassword } = userObject;
+    const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json({
       message: "Login successful",
-      user: {
-        ...userWithoutPassword,
-        id: userWithoutPassword._id.toString(),
-      },
+      user: userWithoutPassword,
     });
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
-      { error: "Failed to authenticate user" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to login" }, { status: 500 });
   }
 }

@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import Restaurant from "@/lib/models/Restaurant";
+import { prisma } from "@/database";
 import { mockRestaurants } from "@/lib/mock-data";
 
 // POST /api/seed - Seed database with mock data
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
-
     // Check if restaurants already exist
-    const existingCount = await Restaurant.countDocuments();
+    const existingCount = await prisma.restaurant.count();
 
     if (existingCount > 0) {
       return NextResponse.json({
@@ -19,13 +16,35 @@ export async function POST(req: NextRequest) {
     }
 
     // Insert mock restaurants
-    const restaurants = await Restaurant.insertMany(mockRestaurants);
+    const createdRestaurants = [];
+    for (const r of mockRestaurants) {
+      const { menu, ...restaurantData } = r;
+      // Remove _id from mock data if present
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { _id, ...cleanData } = restaurantData as any;
+
+      const created = await prisma.restaurant.create({
+        data: {
+          ...cleanData,
+          menu: {
+            create: menu.map((m: any) => ({
+              name: m.name,
+              category: m.category,
+              price: m.price,
+              description: m.description,
+              imageUrl: m.imageUrl,
+            })),
+          },
+        },
+      });
+      createdRestaurants.push(created);
+    }
 
     return NextResponse.json({
       message: "Database seeded successfully",
-      count: restaurants.length,
-      restaurants: restaurants.map((r) => ({
-        id: r._id.toString(),
+      count: createdRestaurants.length,
+      restaurants: createdRestaurants.map((r) => ({
+        id: r.id,
         name: r.name,
       })),
     });

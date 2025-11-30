@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  customer
+  restaurant_admin
+  delivery_partner
+}
+
+enum OrderStatus {
+  pending
+  confirmed
+  preparing
+  out_for_delivery
+  delivered
+  cancelled
+}
+
+enum PaymentMethod {
+  card
+  upi
+  wallet
+  cash
+}
+
+enum PaymentStatus {
+  pending
+  completed
+  failed
+  refunded
+}
+
+enum BookingStatus {
+  pending
+  confirmed
+  completed
+  cancelled
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  password     String
+  phone        String
+  role         UserRole @default(customer)
+  address      String?
+  profileImage String?  @default("/user-avatar.jpg")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  orders   Order[]
+  bookings TableBooking[]
+}
+
+model Restaurant {
+  id           String   @id @default(uuid())
+  name         String
+  cuisine      String
+  rating       Float    @default(4.0)
+  deliveryTime String
+  deliveryFee  Float
+  location     String
+  address      String
+  phone        String
+  description  String
+  imageUrl     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  menu     MenuItem[]
+  orders   Order[]
+  bookings TableBooking[]
+}
+
+model MenuItem {
+  id          String   @id @default(uuid())
+  name        String
+  category    String
+  price       Float
+  description String
+  imageUrl    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}
+
+model Order {
+  id                String        @id @default(uuid())
+  totalAmount       Float
+  status            OrderStatus   @default(pending)
+  deliveryAddress   String
+  estimatedDelivery DateTime?
+  paymentMethod     PaymentMethod @default(cash)
+  paymentStatus     PaymentStatus @default(pending)
+  paymentId         String?
+  transactionId     String?
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  // Relations
+  customerId   String
+  customer     User       @relation(fields: [customerId], references: [id])
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  items        OrderItem[]
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  name     String
+  price    Float
+  quantity Int
+  imageUrl String
+
+  // Relations
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+}
+
+model TableBooking {
+  id              String        @id @default(uuid())
+  date            DateTime
+  time            String
+  partySize       Int
+  specialRequests String?
+  status          BookingStatus @default(pending)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  // Relations
+  customerId   String
+  customer     User       @relation(fields: [customerId], references: [id])
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+}

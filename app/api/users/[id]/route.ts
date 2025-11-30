@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import User from "@/lib/models/User";
+import { prisma } from "@/database";
 
 // GET /api/users/[id] - Get user by ID
 export async function GET(
@@ -8,19 +7,20 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await connectDB();
     const { id } = await params;
 
-    const user = await User.findById(id).select("-password");
+    const user = await prisma.user.findUnique({
+      where: { id },
+    });
 
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({
-      ...user.toObject(),
-      id: user._id.toString(),
-    });
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = user;
+
+    return NextResponse.json(userWithoutPassword);
   } catch (error) {
     console.error("Get user error:", error);
     return NextResponse.json(
@@ -36,30 +36,25 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await connectDB();
     const { id } = await params;
     const updates = await req.json();
 
     // Remove fields that shouldn't be updated directly
     delete updates.password;
-    delete updates._id;
+    delete updates.id;
     delete updates.createdAt;
 
-    const user = await User.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    }).select("-password");
+    const user = await prisma.user.update({
+      where: { id },
+      data: updates,
+    });
 
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...userWithoutPassword } = user;
 
     return NextResponse.json({
       message: "User updated successfully",
-      user: {
-        ...user.toObject(),
-        id: user._id.toString(),
-      },
+      user: userWithoutPassword,
     });
   } catch (error) {
     console.error("Update user error:", error);

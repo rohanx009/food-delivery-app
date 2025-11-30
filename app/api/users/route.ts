@@ -1,28 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import User from "@/lib/models/User";
+import { prisma } from "@/database";
 import bcrypt from "bcryptjs";
 
 // GET all users (with optional role filter)
-export async function GET(request: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    await connectDB();
-
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(req.url);
     const role = searchParams.get("role");
 
-    const query = role ? { role } : {};
-    const users = await User.find(query).select("-password");
+    const where = role ? { role: role as any } : {};
 
-    return NextResponse.json({
-      success: true,
-      data: users,
-      count: users.length,
+    const users = await prisma.user.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phone: true,
+        role: true,
+        address: true,
+        createdAt: true,
+      },
     });
-  } catch (error: any) {
-    console.error("Error fetching users:", error);
+
+    return NextResponse.json(users);
+  } catch (error) {
+    console.error("Get users error:", error);
     return NextResponse.json(
-      { success: false, error: error.message },
+      { error: "Failed to fetch users" },
       { status: 500 }
     );
   }
@@ -31,8 +37,6 @@ export async function GET(request: NextRequest) {
 // POST - Create a new user
 export async function POST(request: NextRequest) {
   try {
-    await connectDB();
-
     const body = await request.json();
     const { name, email, password, phone, role, address } = body;
 
@@ -48,7 +52,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user already exists
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const existingUser = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+    });
+
     if (existingUser) {
       return NextResponse.json(
         { success: false, error: "User with this email already exists" },
@@ -60,23 +67,25 @@ export async function POST(request: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = await User.create({
-      name,
-      email: email.toLowerCase(),
-      password: hashedPassword,
-      phone,
-      role: role || "customer",
-      address,
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email: email.toLowerCase(),
+        password: hashedPassword,
+        phone,
+        role: role || "customer",
+        address,
+      },
     });
 
     // Remove password from response
-    const userResponse = user.toObject();
-    delete userResponse.password;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password: _, ...userWithoutPassword } = user;
 
     return NextResponse.json(
       {
         success: true,
-        data: userResponse,
+        data: userWithoutPassword,
         message: "User created successfully",
       },
       { status: 201 }

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import Restaurant from "@/lib/models/Restaurant";
+import { prisma } from "@/database";
 
 // GET /api/restaurants/[id] - Get restaurant by ID
 export async function GET(
@@ -8,10 +7,12 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await connectDB();
     const { id } = await params;
 
-    const restaurant = await Restaurant.findById(id);
+    const restaurant = await prisma.restaurant.findUnique({
+      where: { id },
+      include: { menu: true },
+    });
 
     if (!restaurant) {
       return NextResponse.json(
@@ -20,10 +21,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({
-      ...restaurant.toObject(),
-      id: restaurant._id.toString(),
-    });
+    return NextResponse.json(restaurant);
   } catch (error) {
     console.error("Get restaurant error:", error);
     return NextResponse.json(

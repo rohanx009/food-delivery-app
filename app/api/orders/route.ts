@@ -1,31 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import Order from "@/lib/models/Order";
+import { prisma } from "@/database";
 
 // GET /api/orders?customerId=xxx - Get orders by customer ID
 export async function GET(req: NextRequest) {
   try {
-    await connectDB();
-
-    const searchParams = req.nextUrl.searchParams;
+    const { searchParams } = new URL(req.url);
     const customerId = searchParams.get("customerId");
-    const restaurantId = searchParams.get("restaurantId");
 
-    let query = {};
-    if (customerId) {
-      query = { customerId };
-    } else if (restaurantId) {
-      query = { restaurantId };
+    if (!customerId) {
+      return NextResponse.json(
+        { error: "Customer ID is required" },
+        { status: 400 }
+      );
     }
 
-    const orders = await Order.find(query).sort({ createdAt: -1 });
+    const orders = await prisma.order.findMany({
+      where: { customerId },
+      orderBy: { createdAt: "desc" },
+      include: {
+        items: true,
+        restaurant: true,
+      },
+    });
 
-    return NextResponse.json(
-      orders.map((order) => ({
-        ...order.toObject(),
-        id: order._id.toString(),
-      }))
-    );
+    return NextResponse.json(orders);
   } catch (error) {
     console.error("Get orders error:", error);
     return NextResponse.json(
@@ -38,20 +36,28 @@ export async function GET(req: NextRequest) {
 // POST /api/orders - Create new order
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
-
     const data = await req.json();
+    const { items, ...orderData } = data;
 
-    const orders = await Order.create(data);
-    const order = Array.isArray(orders) ? orders[0] : orders;
+    const order = await prisma.order.create({
+      data: {
+        ...orderData,
+        items: {
+          create: items.map((item: any) => ({
+            name: item.menuItem.name,
+            price: item.menuItem.price,
+            imageUrl: item.menuItem.imageUrl,
+            quantity: item.quantity,
+          })),
+        },
+      },
+      include: { items: true },
+    });
 
     return NextResponse.json(
       {
         message: "Order created successfully",
-        order: {
-          ...order.toObject(),
-          id: order._id.toString(),
-        },
+        order,
       },
       { status: 201 }
     );

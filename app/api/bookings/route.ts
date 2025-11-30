@@ -1,31 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/mongodb";
-import TableBooking from "@/lib/models/TableBooking";
+import { prisma } from "@/database";
 
 // GET /api/bookings?customerId=xxx - Get bookings by customer ID
 export async function GET(req: NextRequest) {
   try {
-    await connectDB();
-
-    const searchParams = req.nextUrl.searchParams;
+    const { searchParams } = new URL(req.url);
     const customerId = searchParams.get("customerId");
-    const restaurantId = searchParams.get("restaurantId");
 
-    let query = {};
-    if (customerId) {
-      query = { customerId };
-    } else if (restaurantId) {
-      query = { restaurantId };
+    if (!customerId) {
+      return NextResponse.json(
+        { error: "Customer ID is required" },
+        { status: 400 }
+      );
     }
 
-    const bookings = await TableBooking.find(query).sort({ date: -1 });
+    const bookings = await prisma.tableBooking.findMany({
+      where: { customerId },
+      orderBy: { date: "desc" },
+      include: { restaurant: true },
+    });
 
-    return NextResponse.json(
-      bookings.map((booking) => ({
-        ...booking.toObject(),
-        id: booking._id.toString(),
-      }))
-    );
+    return NextResponse.json(bookings);
   } catch (error) {
     console.error("Get bookings error:", error);
     return NextResponse.json(
@@ -38,20 +33,19 @@ export async function GET(req: NextRequest) {
 // POST /api/bookings - Create new booking
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
-
     const data = await req.json();
 
-    const bookings = await TableBooking.create(data);
-    const booking = Array.isArray(bookings) ? bookings[0] : bookings;
+    const booking = await prisma.tableBooking.create({
+      data: {
+        ...data,
+        date: new Date(data.date), // Ensure date is Date object
+      },
+    });
 
     return NextResponse.json(
       {
         message: "Booking created successfully",
-        booking: {
-          ...booking.toObject(),
-          id: booking._id.toString(),
-        },
+        booking,
       },
       { status: 201 }
     );
