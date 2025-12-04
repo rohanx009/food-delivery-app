@@ -33,6 +33,7 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
+    "postinstall": "prisma generate",
     "seed": "powershell -Command \"Invoke-WebRequest -Uri http://localhost:3000/api/seed -Method POST\"",
     "setup:db": "powershell -ExecutionPolicy Bypass -File ./scripts/setup-mongodb.ps1",
     "start": "next start"
