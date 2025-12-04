@@ -6,9 +6,15 @@ import { mockRestaurants } from "@/lib/mock-data";
 export async function POST(req: NextRequest) {
   try {
     // Check if restaurants already exist
-    const existingCount = await prisma.restaurant.count();
+    const { searchParams } = new URL(req.url);
+    const force = searchParams.get("force") === "true";
 
-    if (existingCount > 0) {
+    console.log("Seed API - DATABASE_URL:", process.env.DATABASE_URL);
+
+    const existingCount = await prisma.restaurant.count();
+    console.log("Seed API - Existing count:", existingCount);
+
+    if (existingCount > 0 && !force) {
       return NextResponse.json({
         message: "Database already seeded",
         count: existingCount,
