@@ -61,24 +61,24 @@ model MenuItem {
 }
 
 model Order {
-  id                String        @id @default(uuid())
+  id                String    @id @default(uuid())
   totalAmount       Float
-  status            String        @default("pending") // Enum: pending, confirmed, preparing, out_for_delivery, delivered, cancelled
+  status            String    @default("pending") // Enum: pending, confirmed, preparing, out_for_delivery, delivered, cancelled
   deliveryAddress   String
   estimatedDelivery DateTime?
-  paymentMethod     String        @default("cash") // Enum: card, upi, wallet, cash
-  paymentStatus     String        @default("pending") // Enum: pending, completed, failed, refunded
+  paymentMethod     String    @default("cash") // Enum: card, upi, wallet, cash
+  paymentStatus     String    @default("pending") // Enum: pending, completed, failed, refunded
   paymentId         String?
   transactionId     String?
   paidAt            DateTime?
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   // Relations
   customerId   String
-  customer     User       @relation(fields: [customerId], references: [id])
+  customer     User        @relation(fields: [customerId], references: [id])
   restaurantId String
-  restaurant   Restaurant @relation(fields: [restaurantId], references: [id])
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
   items        OrderItem[]
 }
 
@@ -95,14 +95,14 @@ model OrderItem {
 }
 
 model TableBooking {
-  id              String        @id @default(uuid())
+  id              String   @id @default(uuid())
   date            DateTime
   time            String
   partySize       Int
   specialRequests String?
-  status          String        @default("pending") // Enum: pending, confirmed, completed, cancelled
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  status          String   @default("pending") // Enum: pending, confirmed, completed, cancelled
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   // Relations
   customerId   String
