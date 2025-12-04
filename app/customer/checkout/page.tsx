@@ -84,7 +84,7 @@ export default function CheckoutPage() {
     }
   };
 
-  const handlePaymentSubmit = (e: React.FormEvent) => {
+  const handlePaymentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       formData.paymentMethod === "cash" ||
@@ -96,11 +96,50 @@ export default function CheckoutPage() {
         formData.cvv)
     ) {
       setIsProcessing(true);
-      // Simulate payment processing
-      setTimeout(() => {
-        setIsProcessing(false);
+      try {
+        if (!user || cart.length === 0) return;
+
+        // Create order payload
+        const orderData = {
+          customerId: user.id,
+          restaurantId: cart[0].restaurantId,
+          totalAmount:
+            getCartTotal() + getCartTotal() * 0.1 + (cart.length > 0 ? 40 : 0),
+          status: "pending",
+          deliveryAddress: `${formData.street}, ${formData.city}, ${formData.zipCode}`,
+          paymentMethod: formData.paymentMethod,
+          paymentStatus: "completed", // Assuming successful payment for demo
+          items: cart.map((item) => ({
+            menuItem: {
+              name: item.name,
+              price: item.price,
+              imageUrl: item.imageUrl || "/placeholder-food.jpg",
+            },
+            quantity: item.quantity,
+          })),
+        };
+
+        const response = await fetch("/api/orders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(orderData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to place order");
+        }
+
+        const data = await response.json();
+        console.log("Order placed:", data);
+
+        clearCart();
         setStep("confirmation");
-      }, 2000);
+      } catch (error) {
+        console.error("Payment error:", error);
+        alert("Failed to process payment. Please try again.");
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 
